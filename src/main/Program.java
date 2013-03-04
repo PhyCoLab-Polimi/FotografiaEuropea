@@ -18,7 +18,10 @@ public class Program extends PApplet {
 		
 	}
 	
-	public void draw() {}
+	public void draw() {
+		
+		background(255,0,0);
+	}
 
 }
 
