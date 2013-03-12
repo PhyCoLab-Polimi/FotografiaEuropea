@@ -1,16 +1,16 @@
 package main;
 
-import java.util.HashMap;
-
 import processing.core.PApplet;
 
 @SuppressWarnings("serial")
 public class Program extends PApplet {
 	
 	static public void main(String args[]) {
-		System.out.println("pre-main");		
+		System.out.println("pre-main");
 		PApplet.main(new String[] { "main.Program" });
-		System.out.println("post-main");
+		System.out.println("stopping server");
+		References.stopServer();
+		System.out.println("exiting");
 	}	
 	
 	public void setup() {

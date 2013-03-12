@@ -10,4 +10,8 @@ public class DataStruct {
 		this.y = y;
 		this.z = z;
 	}
+	
+	public String toString() {
+		return "X: "+this.x+" ; "+"Y: "+this.y+" ; "+"Z: "+this.z+" ;";
+	}
 }

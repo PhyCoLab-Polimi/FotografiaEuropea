@@ -20,4 +20,10 @@ public class References {
 		References.serverThread = new ServerThread();
 		serverThread.start();
 	}
+	
+	public static void stopServer() {
+		if (serverThread!= null) {
+			serverThread.stopListening();
+		}
+	}
 }
