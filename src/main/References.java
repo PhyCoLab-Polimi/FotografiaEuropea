@@ -13,6 +13,7 @@ public class References {
 	public static HashMap<String, DataStruct> data;
 	
 	public static ServerThread serverThread;
+	public static DataSenderFromFileThread senderThread;
 
 	
 	public static void initServer() {
@@ -25,5 +26,10 @@ public class References {
 		if (serverThread!= null) {
 			serverThread.stopListening();
 		}
+	}
+	
+	public static void initSender() {
+		References.senderThread =  new DataSenderFromFileThread();
+		senderThread.start();
 	}
 }
