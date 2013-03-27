@@ -39,6 +39,7 @@ public class ServerThread extends Thread {
     	String[] fields = dataString.split(" ");    	
     	DataStruct newDS = new DataStruct(Float.parseFloat(fields[1]), Float.parseFloat(fields[2]), Float.parseFloat(fields[3]), fields[0]);
     	References.data.put(fields[0], newDS);
+    	System.out.println(dataString);
     }
     
     public void stopListening() {

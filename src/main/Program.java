@@ -3,6 +3,8 @@ package main;
 import java.util.ArrayList;
 import processing.core.PApplet;
 
+import sketches.*;
+
 @SuppressWarnings("serial")
 public class Program extends PApplet {
 	
@@ -12,11 +14,16 @@ public class Program extends PApplet {
 		System.out.println("stopping server");
 		//References.stopServer();
 		System.out.println("exiting");
-	}	
+	}
+	
+	EmptySketch[] sketches;
 	
 	public void setup() {
 		//Initialize the reference to the PApplet
 		References.parent = this;
+		
+		//Set up size.
+		References.parent.size(1024, 768);
 		
 		//Start the server listener
 		References.initServer();	
@@ -24,6 +31,15 @@ public class Program extends PApplet {
 		
 		//INSERT SETUP AFTER THIS LINE
 		// ------------------------------------------------
+		
+		sketches = new EmptySketch[7];
+		sketches[0] = new EmptySketch(); sketches[0].setup();
+		sketches[1] = new AndreaRossi(); sketches[1].setup();
+		sketches[2] = new GiorgioVignati(); sketches[2].setup();
+		sketches[3] = new MartaZambelli(); sketches[3].setup();
+		sketches[4] = new MatteoTaramelli(); sketches[4].setup();
+		sketches[5] = new PaoloAlborghetti(); sketches[5].setup();
+		sketches[6] = new TomasoBaj(); sketches[6].setup();
 	}
 	
 	public void draw() {
@@ -59,6 +75,8 @@ public class Program extends PApplet {
 		}
 		
 		
+		//CHANGE THE NUMBER HERE TO REFLECT YOUR SKETCH!
+		sketches[0].draw();
 	}
 
 }

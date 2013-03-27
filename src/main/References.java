@@ -8,7 +8,7 @@ public class References {
 	
 	public static PApplet parent;
 	
-	public static final int socketPort = 20000;
+	public static final int socketPort = 9930;
 	
 	public static HashMap<String, DataStruct> data;
 	
