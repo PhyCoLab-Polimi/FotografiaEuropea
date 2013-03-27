@@ -76,7 +76,7 @@ public class Program extends PApplet {
 		
 		
 		//CHANGE THE NUMBER HERE TO REFLECT YOUR SKETCH!
-		sketches[0].draw();
+		sketches[1].draw();
 	}
 
 }
