@@ -2,12 +2,28 @@ package sketches;
 
 import java.util.ArrayList;
 
+import toxi.geom.*;
+
 import main.DataStruct;
 import main.References;
 
 public class AndreaRossi extends EmptySketch {
 	
+	
+	ArrayList<Pt> points;
+	
 	public void setup () {
+		
+		
+		// creating background rotating points
+		points = new ArrayList<Pt>();
+		
+		for(int i = 0; i < 1000; i++){			
+			float radius = parent.random(200, 350);			
+			float angle = parent.random(parent.PI *2);			
+			Pt p = new Pt(radius, angle);			
+			points.add(p);		
+		}
 		
 	}
 	
@@ -30,6 +46,33 @@ public class AndreaRossi extends EmptySketch {
 		}
 		
 		
+		
+		for(int i = 0; i < dataAL.size(); i++){
+			DataStruct ds = dataAL.get(i);
+			
+			
+			float massAdd = ds.x + ds.y + ds.z;
+			
+			Pt p = points.get(parent.floor(parent.random(points.size())));
+			
+			
+			parent.noStroke();
+			
+			float stSize = parent.map(massAdd, -2, 2, 5, 50);
+			stSize = parent.constrain(stSize, 0, 100);
+			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), stSize*10);
+			
+			parent.ellipse(p.loc.x + p.center.x, p.loc.y + p.center.y, stSize, stSize);			
+		}
+		
+		
+		
+		for(Pt p : points){
+			p.run();
+		}
+		
+		
+		/*
 		parent.ellipseMode(2);
 		
 		for(int i = 0; i < dataAL.size(); i++){
@@ -63,5 +106,54 @@ public class AndreaRossi extends EmptySketch {
 				
 			}			
 		}
+		
+		*/
 	}
+	
+	
+	
+	private class Pt {
+		
+		Vec3D loc;
+		float theta;
+		
+		float dim;
+		
+		Vec3D center = new Vec3D(parent.width/2, parent.height/2, 0);
+		
+		Pt(float radius, float angle){
+			
+			float px = (float) (Math.sin(angle)* radius);
+			float py = (float) (Math.cos(angle)* radius);
+			
+			loc = new Vec3D(px, py, 0);
+			
+			float r = (float) parent.random(1);
+			
+			theta = parent.random(-0.02f, 0.02f);
+			
+			dim = parent.random(4);
+		
+		}
+		
+		void run(){
+					
+			display();
+			spinAround();		
+			
+		}
+		
+		void spinAround(){
+			
+			loc.rotateZ(theta);
+		}
+		
+		void display(){
+			parent.stroke(255);
+			parent.strokeWeight(dim);
+			parent.point(loc.x + center.x, loc.y + center.y);
+		}	
+		
+	}	
+	
 }
