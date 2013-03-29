@@ -2,6 +2,8 @@ package sketches;
 
 import java.util.ArrayList;
 
+import processing.core.PApplet;
+
 import toxi.geom.*;
 
 import main.DataStruct;
@@ -46,12 +48,14 @@ public class AndreaRossi extends EmptySketch {
 		}
 		
 		
+		float totAdd = 0;
 		
 		for(int i = 0; i < dataAL.size(); i++){
 			DataStruct ds = dataAL.get(i);
 			
 			
 			float massAdd = ds.x + ds.y + ds.z;
+			totAdd += Math.abs(massAdd);
 			
 			Pt p = points.get(parent.floor(parent.random(points.size())));
 			
@@ -60,15 +64,19 @@ public class AndreaRossi extends EmptySketch {
 			
 			float stSize = parent.map(massAdd, -2, 2, 5, 50);
 			stSize = parent.constrain(stSize, 0, 100);
-			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), stSize*10);
+			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), stSize*20);
 			
 			parent.ellipse(p.loc.x + p.center.x, p.loc.y + p.center.y, stSize, stSize);			
 		}
 		
+		totAdd = PApplet.map(totAdd, 0, 4*count, 0.935f, 1.22f);
 		
+		if(totAdd > 1.20f){
+			
+		}
 		
 		for(Pt p : points){
-			p.run();
+			p.run(totAdd);
 		}
 		
 		
@@ -113,15 +121,18 @@ public class AndreaRossi extends EmptySketch {
 	
 	
 	private class Pt {
-		
+				
 		Vec3D loc;
+		float radius;
 		float theta;
 		
 		float dim;
 		
 		Vec3D center = new Vec3D(parent.width/2, parent.height/2, 0);
 		
-		Pt(float radius, float angle){
+		Pt(float _radius, float angle){
+			
+			radius = _radius;
 			
 			float px = (float) (Math.sin(angle)* radius);
 			float py = (float) (Math.cos(angle)* radius);
@@ -130,17 +141,35 @@ public class AndreaRossi extends EmptySketch {
 			
 			float r = (float) parent.random(1);
 			
-			theta = parent.random(-0.02f, 0.02f);
+			theta = parent.random(-0.04f, 0.02f);
 			
 			dim = parent.random(4);
 		
 		}
 		
-		void run(){
+		void run(float _scaling){
 					
 			display();
-			spinAround();		
+			spinAround();
+			constrainScaling(_scaling);
+				
 			
+		}
+		
+		void constrainScaling(float scaling){
+			if(loc.magnitude() > radius + 50){
+				if(scaling < 1){
+					loc.scaleSelf(scaling);
+				}			
+			}
+			else if(loc.magnitude() < radius - 200){
+				if(scaling > 1){
+					loc.scaleSelf(scaling);
+				}
+			}
+			else{
+				loc.scaleSelf(scaling);
+			}	
 		}
 		
 		void spinAround(){
@@ -149,7 +178,9 @@ public class AndreaRossi extends EmptySketch {
 		}
 		
 		void display(){
-			parent.stroke(255);
+			
+			float stAlpha = PApplet.map(loc.magnitude(), 0, 300, 50, 255);
+			parent.stroke(255, stAlpha);
 			parent.strokeWeight(dim);
 			parent.point(loc.x + center.x, loc.y + center.y);
 		}	
