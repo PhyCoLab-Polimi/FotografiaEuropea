@@ -15,6 +15,8 @@ public class References {
 	public static ServerThread serverThread;
 	public static DataSenderFromFileThread senderThread;
 
+	public static int width = 1024;
+	public static int height = 768;
 	
 	public static void initServer() {
 		References.data = new HashMap<String, DataStruct>();		

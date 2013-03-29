@@ -1,6 +1,8 @@
 package main;
 
-import java.util.ArrayList;
+import java.io.FileWriter;
+import java.util.Date;
+
 import processing.core.PApplet;
 
 import sketches.*;
@@ -11,9 +13,7 @@ public class Program extends PApplet {
 	static public void main(String args[]) {
 		System.out.println("pre-main");
 		PApplet.main(new String[] { "main.Program" });
-		System.out.println("stopping server");
-		//References.stopServer();
-		System.out.println("exiting");
+		System.out.println("post-main");
 	}
 	
 	EmptySketch[] sketches;
@@ -23,7 +23,7 @@ public class Program extends PApplet {
 		References.parent = this;
 		
 		//Set up size.
-		References.parent.size(1024, 768);
+		References.parent.size(References.width, References.height);
 		
 		//Start the server listener
 		References.initServer();	
@@ -33,7 +33,7 @@ public class Program extends PApplet {
 		// ------------------------------------------------
 		
 		sketches = new EmptySketch[7];
-		sketches[0] = new EmptySketch(); sketches[0].setup();
+		sketches[0] = new DiegoMartinoia(); sketches[0].setup();
 		sketches[1] = new AndreaRossi(); sketches[1].setup();
 		sketches[2] = new GiorgioVignati(); sketches[2].setup();
 		sketches[3] = new MartaZambelli(); sketches[3].setup();
@@ -58,7 +58,7 @@ public class Program extends PApplet {
 		}*/
 		
 		//Conversion of hashmap in arrayList, commented out to avoid duplication:
-		ArrayList<DataStruct> dataAL = new ArrayList<DataStruct>();
+		/*ArrayList<DataStruct> dataAL = new ArrayList<DataStruct>();
 		for (String id : References.data.keySet()) {
 			//Pull the data object
 			DataStruct ds = References.data.get(id);
@@ -67,16 +67,32 @@ public class Program extends PApplet {
 			
 			//--> NOTE: THE ORDER IS NOT GUARANTEED!!! <--
 		    dataAL.add(ds);
-		}
+		}*/
 		
 		//Print the arrayList content
-		for (DataStruct ds: dataAL) {
-			System.out.println(ds.toString());
-		}
+		//for (DataStruct ds: dataAL) {
+			//System.out.println(ds.toString());
+		//}
 		
 		
 		//CHANGE THE NUMBER HERE TO REFLECT YOUR SKETCH!
-		sketches[1].draw();
+		try {
+			sketches[1].draw();
+		}
+		catch (Exception e) {
+			System.out.println("ERROR IN MAIN! Writing log for "+ e.toString()); 
+			
+			try {
+				Date d = new Date();
+				FileWriter f = new FileWriter("log_"+d.toString()+".txt");
+				f.write(e.toString());
+				f.close();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				System.out.println("ERROR IN WRITING LOG. Aborting logging.");
+			}
+			
+		}
 	}
 
 }
