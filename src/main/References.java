@@ -18,6 +18,8 @@ public class References {
 	public static int width = 1024;
 	public static int height = 768;
 	
+	public static int currentSketch = 0;
+	
 	public static void initServer() {
 		References.data = new HashMap<String, DataStruct>();		
 		References.serverThread = new ServerThread();

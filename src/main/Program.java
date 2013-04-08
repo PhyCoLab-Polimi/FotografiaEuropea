@@ -77,7 +77,7 @@ public class Program extends PApplet {
 		
 		//CHANGE THE NUMBER HERE TO REFLECT YOUR SKETCH!
 		try {
-			sketches[1].draw();
+			sketches[References.currentSketch].draw();
 		}
 		catch (Exception e) {
 			System.out.println("ERROR IN MAIN! Writing log for "+ e.toString()); 
@@ -93,6 +93,11 @@ public class Program extends PApplet {
 			}
 			
 		}
+	}
+	
+	public void keyPressed() {
+		int i = Character.getNumericValue(key);
+		if (i>=0 && i< sketches.length) References.currentSketch = i;
 	}
 
 }
