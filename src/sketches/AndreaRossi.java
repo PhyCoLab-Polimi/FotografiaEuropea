@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 
 import toxi.geom.*;
+import processing.opengl.*;
 
 import main.DataStruct;
 import main.References;
