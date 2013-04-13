@@ -12,6 +12,22 @@ import main.References;
 
 public class AndreaRossi extends EmptySketch {
 	
+	private class Rcvr {
+		String UDID;
+		Vec3D acc= new Vec3D(0,0,0);
+		float countx=0;
+		float county=0;
+		
+		Rcvr(String _UDID, Vec3D _acc){
+		    
+		    UDID= _UDID;
+		    acc= _acc;
+		}
+	}
+
+	ArrayList<DataStruct> dataAL = new ArrayList<DataStruct>();
+	ArrayList<Rcvr> recCollection= new ArrayList<Rcvr>();
+	
 	
 	ArrayList<Pt> points;
 	
@@ -36,26 +52,22 @@ public class AndreaRossi extends EmptySketch {
 		
 		int count = References.data.size();
 		
-		//import data from hashmap to arraylist
-		ArrayList<DataStruct> dataAL = new ArrayList<DataStruct>();
+		dataAL.clear();
 		for (String id : References.data.keySet()) {
-			//Pull the data object
 			DataStruct ds = References.data.get(id);
-			
-			//Add it to the list: 
-			
-			//--> NOTE: THE ORDER IS NOT GUARANTEED!!! <--
 		    dataAL.add(ds);
 		}
+		
+		read();
 		
 		
 		float totAdd = 0;
 		
-		for(int i = 0; i < dataAL.size(); i++){
-			DataStruct ds = dataAL.get(i);
+		for (int i=0; i<recCollection.size(); i++) {
+		    Rcvr theRec= (Rcvr) recCollection.get(i);
 			
 			
-			float massAdd = ds.x + ds.y + ds.z;
+			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
 			totAdd += Math.abs(massAdd);
 			
 			Pt p = points.get(parent.floor(parent.random(points.size())));
@@ -72,9 +84,7 @@ public class AndreaRossi extends EmptySketch {
 		
 		totAdd = PApplet.map(totAdd, 0, 4*count, 0.935f, 1.22f);
 		
-		if(totAdd > 1.20f){
-			
-		}
+		
 		
 		for(Pt p : points){
 			p.run(totAdd);
@@ -126,8 +136,12 @@ public class AndreaRossi extends EmptySketch {
 		Vec3D loc;
 		float radius;
 		float theta;
-		
 		float dim;
+		
+		Vec3D[] tail;
+		int tailLenght = 10;
+		
+		
 		
 		Vec3D center = new Vec3D(parent.width/2, parent.height/2, 0);
 		
@@ -145,6 +159,12 @@ public class AndreaRossi extends EmptySketch {
 			theta = parent.random(-0.04f, 0.02f);
 			
 			dim = parent.random(4);
+			
+			tail = new Vec3D[tailLenght];
+			for(int i = 0; i < tailLenght; i++){
+				tail[i] = new Vec3D(loc.x, loc.y, loc.z);
+			}
+			
 		
 		}
 		
@@ -153,8 +173,20 @@ public class AndreaRossi extends EmptySketch {
 			display();
 			spinAround();
 			constrainScaling(_scaling);
+			if(parent.frameCount % 1 == 0){
+				updateTail();
+			}
+			
 				
 			
+		}
+		
+		void updateTail(){
+			for(int i = 0; i < tail.length - 1; i++){
+				tail[i] = tail[i+1];
+			}
+			
+			tail[tail.length - 1] = new Vec3D(loc.x, loc.y, loc.z);		
 		}
 		
 		void constrainScaling(float scaling){
@@ -173,8 +205,7 @@ public class AndreaRossi extends EmptySketch {
 			}	
 		}
 		
-		void spinAround(){
-			
+		void spinAround(){			
 			loc.rotateZ(theta);
 		}
 		
@@ -184,8 +215,55 @@ public class AndreaRossi extends EmptySketch {
 			parent.stroke(255, stAlpha);
 			parent.strokeWeight(dim);
 			parent.point(loc.x + center.x, loc.y + center.y);
+			
+			
+			float partDim = dim/tail.length;
+			float partAlpha = stAlpha/tail.length;
+			
+			for(int i = 0; i < tail.length; i++){
+				parent.stroke(255, partAlpha*i);
+				parent.strokeWeight(partDim *i);
+				parent.point(tail[i].x + center.x, tail[i].y + center.y);
+			}
 		}	
 		
 	}	
+	
+	
+private void read () {
+		
+		if(dataAL.size()!=0){
+		
+		for(int i = 0; i < dataAL.size(); i++){
+			DataStruct ds = dataAL.get(i);
+			
+			
+			if(recCollection.size()==0){
+				Rcvr nuRec= new Rcvr(ds.id,new Vec3D(ds.x,ds.y,ds.z));
+				recCollection.add(nuRec);
+			}
+			else{
+				
+				boolean addNew=true;
+				for (int j=0; j<recCollection.size(); j++) {
+			          Rcvr checkRec= (Rcvr) recCollection.get(j);
+			          if (ds.id.equals(checkRec.UDID)==true) {
+			            addNew= false;
+			            checkRec.acc= new Vec3D(ds.x,ds.y,ds.z);
+			            break;
+			          }
+				}
+		        if (addNew==true) {
+		            Rcvr nuRec= new Rcvr(ds.id, new Vec3D(ds.x,ds.y,ds.z));    
+		            recCollection.add(nuRec);
+		          }
+			}
+
+		}
+
+	}
+	}
+
+	
 	
 }
