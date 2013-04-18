@@ -35,7 +35,7 @@ public class MatteoTaramelli extends EmptySketch {
 	public void draw() {
 		
 		parent.background(0);
-		
+		parent.smooth();
 		dataAL.clear();
 		for (String id : References.data.keySet()) {
 			DataStruct ds = References.data.get(id);
@@ -46,7 +46,7 @@ public class MatteoTaramelli extends EmptySketch {
 		
 		execute();
 		
-		
+		PApplet.println(recCollection.size());
 		
 	}
 	
@@ -101,44 +101,69 @@ public class MatteoTaramelli extends EmptySketch {
 		    float cenY= main.References.height/2- PApplet.sin(PApplet.radians(theRec.countx))*50;
 
 		    parent.noFill();
-		    parent.stroke(PApplet.abs(theRec.acc.z)*PApplet.sin(i/10)*100,parent.random(50,150));
-		    parent.strokeWeight((float)0.5*PApplet.abs(theRec.acc.y));
-		    parent.ellipse(cenX, cenY, i*Rad, i*Rad);
+		    parent.stroke(Math.abs(theRec.acc.z)*PApplet.sin(i/10)*100,parent.random(50,150));
+		    parent.strokeWeight((float)0.5*Math.abs(theRec.acc.y));
+		    parent.ellipse(cenX, cenY, References.height/5/recCollection.size()*i*Rad, References.height/5/recCollection.size()*i*Rad);
+		    parent.ellipse(cenX, cenY, References.height/10/recCollection.size()*i*Rad, References.height/10/recCollection.size()*i*Rad);
 		  }
 
 
 		  for (int i=0; i<recCollection.size(); i++) {
 		    Rcvr theRec= (Rcvr) recCollection.get(i);
 
-		    float rotX= PApplet.cos(PApplet.radians(theRec.county))*(i*Rad);
-		    float rotY= PApplet.sin(PApplet.radians(theRec.county))*(i*Rad);
+		    float rotX= PApplet.cos(PApplet.radians(theRec.county))*(References.height/5/recCollection.size()*i*Rad);
+		    float rotY= PApplet.sin(PApplet.radians(theRec.county))*(References.height/5/recCollection.size()*i*Rad);
+		    
+		    float rotaX= PApplet.cos(PApplet.radians(theRec.county))*(References.height/10/recCollection.size()*i*Rad);
+		    float rotaY= PApplet.sin(PApplet.radians(theRec.county))*(References.height/10/recCollection.size()*i*Rad);
+		    
 		    float cenX= References.width/2;
 		    float cenY= References.height/2+ PApplet.sin(PApplet.radians(theRec.countx))*50;
+		    float thick=PApplet.map(Math.abs(theRec.acc.z), 0, 2, 5, 30);
+		    parent.noStroke();
+		    parent.fill(20*i,1000/(i+1) , 300/(i+1), PApplet.map(Math.abs(theRec.acc.z), 0, 2, 50, 250));
+		    parent.ellipse(cenX+rotX, cenY+rotY, thick*2, thick*2);
+		    parent.ellipse(cenX-rotX, cenY+rotY, thick*2, thick*2);
+		    parent.ellipse(cenX+rotaX, cenY-rotaY, thick, thick);
+		    parent.ellipse(cenX-rotaX, cenY-rotaY, thick, thick);
 
-		    parent.strokeWeight((float)PApplet.map(PApplet.abs(theRec.acc.z), 0, 2, 1, 20));
-		    parent.stroke(1000/(i+1), 15*i, 2000/(i+1), PApplet.map(PApplet.abs(theRec.acc.z), 0, 2, 50, 250));
-
-		    parent.point(cenX+rotX, cenY+rotY, 0);
-		    parent.point(cenX-rotX, cenY+rotY, 0);
 
 
 		    for (int j=0; j<recCollection.size(); j++) {
 		      Rcvr othRec= (Rcvr) recCollection.get(j);
 
-		      float rotOX= PApplet.cos(PApplet.radians(othRec.county))*(j*2);
-		      float rotOY= PApplet.sin(PApplet.radians(othRec.county))*(j*2);
-		      float rotRX= (float)(PApplet.cos(PApplet.radians(othRec.county))*(j*2.05));
-		      float rotRY= (float)(PApplet.sin(PApplet.radians(othRec.county))*(j*2.05));
+		      float rotOX= PApplet.cos(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2);
+		      float rotOY= PApplet.sin(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2);
+		      float rotRX= (float)(PApplet.cos(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2.05));
+		      float rotRY= (float)(PApplet.sin(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2.05));
 
-		      if (theRec.acc.y> othRec.acc.y-0.001 && theRec.acc.y < othRec.acc.y+0.001) {
+		      float rotaOX= PApplet.cos(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2);
+		      float rotaOY= PApplet.sin(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2);
+		      float rotaRX= (float)(PApplet.cos(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2.05));
+		      float rotaRY= (float)(PApplet.sin(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2.05));
+
+		      
+		      
+		      
+		      
+		      if (theRec.acc.y> othRec.acc.y-0.01 && theRec.acc.y < othRec.acc.y+0.01) {
 
 		        parent.strokeWeight(1);
-		        parent.stroke(PApplet.abs(othRec.acc.z)*50, 20*i, 20*j, PApplet.abs(theRec.acc.z)*50);
+		        parent.stroke(Math.abs(othRec.acc.z)*50, 20*i, 20*j, Math.abs(theRec.acc.z)*50);
+		        
 		        parent.line(cenX+rotX, cenY+rotY, cenX+rotOX,cenY+rotOY);
 		        parent.line(cenX-rotX, cenY+rotY, cenX-rotOX, cenY+rotOY);
+		        
+		        parent.line(cenX+rotaX, cenY+rotaY, cenX+rotaOX,cenY+rotaOY);
+		        parent.line(cenX-rotaX, cenY+rotaY, cenX-rotaOX, cenY+rotaOY);
+		        
 		        parent.strokeWeight(3);
+		        
 		        parent.line(cenX+rotRX,cenY+rotRY, cenX+rotOX, cenY+rotOY);
 		        parent.line(cenX-rotRX,cenY+rotRY, cenX-rotOX, cenY+rotOY);
+		        
+		        parent.line(cenX+rotaRX,cenY+rotaRY, cenX+rotaOX, cenY+rotaOY);
+		        parent.line(cenX-rotaRX,cenY+rotaRY, cenX-rotaOX, cenY+rotaOY);
 		      }
 		    }
 		  }
