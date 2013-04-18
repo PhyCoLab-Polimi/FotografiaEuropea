@@ -32,14 +32,15 @@ public class Program extends PApplet {
 		//INSERT SETUP AFTER THIS LINE
 		// ------------------------------------------------
 		
-		sketches = new EmptySketch[7];
+		sketches = new EmptySketch[8];
 		sketches[0] = new DiegoMartinoia(); sketches[0].setup();
 		sketches[1] = new AndreaRossi(); sketches[1].setup();
-		sketches[2] = new GiorgioVignati(); sketches[2].setup();
-		sketches[3] = new MartaZambelli(); sketches[3].setup();
-		sketches[4] = new MatteoTaramelli(); sketches[4].setup();
-		sketches[5] = new PaoloAlborghetti(); sketches[5].setup();
-		sketches[6] = new TomasoBaj(); sketches[6].setup();
+		sketches[2] = new AndreaRossi2(); sketches[2].setup();
+		sketches[3] = new GiorgioVignati(); sketches[2].setup();
+		sketches[4] = new MartaZambelli(); sketches[3].setup();
+		sketches[5] = new MatteoTaramelli(); sketches[4].setup();
+		sketches[6] = new PaoloAlborghetti(); sketches[5].setup();
+		sketches[7] = new TomasoBaj(); sketches[6].setup();
 	}
 	
 	public void draw() {
