@@ -23,7 +23,7 @@ public class Program extends PApplet {
 		References.parent = this;
 		
 		//Set up size.
-		References.parent.size(References.width, References.height);
+		References.parent.size(References.width, References.height, PApplet.OPENGL);
 		
 		//Start the server listener
 		References.initServer();	

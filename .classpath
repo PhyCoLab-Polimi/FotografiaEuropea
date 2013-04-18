@@ -7,8 +7,16 @@
 	<classpathentry kind="lib" path="external-libs/AndreaRossi/toxiclibscore.jar"/>
 	<classpathentry kind="lib" path="external-libs/AndreaRossi/toxiclibs_p5.jar"/>
 	<classpathentry kind="lib" path="external-libs/AndreaRossi/verletphysics.jar"/>
-	<classpathentry kind="lib" path="external-libs/AndreaRossi/opengl.jar"/>
-	<classpathentry kind="lib" path="external-libs/AndreaRossi/jogl.jar"/>
-	<classpathentry kind="lib" path="external-libs/AndreaRossi/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="external-libs/processing/gluegen-rt.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="FotografiaEuropea/external-libs/processing/windows32"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="external-libs/processing/jogl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="FotografiaEuropea/external-libs/processing/windows32"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="external-libs/processing/opengl.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
