@@ -18,12 +18,16 @@ public class AndreaRossi extends EmptySketch {
 		float countx=0;
 		float county=0;
 		
-		Rcvr(String _UDID, Vec3D _acc){
+		int pointID;
+		
+		Rcvr(String _UDID, Vec3D _acc, int _pointID){
 		    
 		    UDID= _UDID;
 		    acc= _acc;
+		    pointID = _pointID;
 		}
 	}
+	
 
 	ArrayList<DataStruct> dataAL = new ArrayList<DataStruct>();
 	ArrayList<Rcvr> recCollection= new ArrayList<Rcvr>();
@@ -31,13 +35,16 @@ public class AndreaRossi extends EmptySketch {
 	
 	ArrayList<Pt> points;
 	
+	float innerScale =  (float) 3;
+	
+	
 	public void setup () {
 		
 		
 		// creating background rotating points
 		points = new ArrayList<Pt>();
 		
-		for(int i = 0; i < 1000; i++){			
+		for(int i = 0; i < 500; i++){			
 			float radius = parent.random(200, 350);			
 			float angle = parent.random(parent.PI *2);			
 			Pt p = new Pt(radius, angle);			
@@ -70,17 +77,46 @@ public class AndreaRossi extends EmptySketch {
 			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
 			totAdd += Math.abs(massAdd);
 			
-			Pt p = points.get(parent.floor(parent.random(points.size())));
+			Pt p = points.get(theRec.pointID);
 			
 			
+			Vec3D innerPt = new Vec3D(p.loc.x/innerScale, p.loc.y/innerScale, p.loc.z/innerScale);
+						
 			parent.noStroke();
 			
 			float stSize = parent.map(massAdd, -2, 2, 5, 50);
 			stSize = parent.constrain(stSize, 0, 100);
 			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), stSize*20);
 			
-			parent.ellipse(p.loc.x + p.center.x, p.loc.y + p.center.y, stSize, stSize);			
+			parent.ellipse(innerPt.x + p.center.x, innerPt.y + p.center.y, stSize, stSize);
+			
+			int numConnections = parent.floor(parent.map(massAdd, -2, 2, 3, (float) (recCollection.size()/1.2)));
+			
+			numConnections = parent.constrain(numConnections, 3, parent.floor((float) (recCollection.size()/1.2)));
+			
+			for (int j=0; j<numConnections; j++) {
+				if(i != j){
+						Rcvr theRec2= (Rcvr) recCollection.get(j);
+						
+						float massAdd2 = theRec2.acc.x + theRec2.acc.y + theRec2.acc.z;
+						
+						Pt p2 = points.get(theRec2.pointID);
+						
+						Vec3D innerPt2 = new Vec3D(p2.loc.x/innerScale, p2.loc.y/innerScale, p2.loc.z/innerScale);
+						
+						parent.stroke(255, 100);
+						parent.strokeWeight(1);
+						
+						parent.line(innerPt.x + p.center.x, innerPt.y + p.center.y, innerPt2.x + p.center.x, innerPt2.y + p.center.y);
+
+				}
+			    
+			    
+			}
+			
 		}
+		
+		
 		
 		totAdd = PApplet.map(totAdd, 0, 4*count, 0.935f, 1.22f);
 		
@@ -139,7 +175,7 @@ public class AndreaRossi extends EmptySketch {
 		float dim;
 		
 		Vec3D[] tail;
-		int tailLenght = 10;
+		int tailLenght = 5;
 		
 		
 		
@@ -156,24 +192,24 @@ public class AndreaRossi extends EmptySketch {
 			
 			float r = (float) parent.random(1);
 			
-			theta = parent.random(-0.04f, 0.02f);
+			theta = parent.random(-0.08f, 0.04f);
 			
-			dim = parent.random(4);
+			dim = parent.random(6);
 			
 			tail = new Vec3D[tailLenght];
 			for(int i = 0; i < tailLenght; i++){
 				tail[i] = new Vec3D(loc.x, loc.y, loc.z);
-			}
-			
+			}		
 		
 		}
+		
 		
 		void run(float _scaling){
 					
 			display();
 			spinAround();
 			constrainScaling(_scaling);
-			if(parent.frameCount % 1 == 0){
+			if(parent.frameCount % 2 == 0){
 				updateTail();
 			}
 			
@@ -188,6 +224,7 @@ public class AndreaRossi extends EmptySketch {
 			
 			tail[tail.length - 1] = new Vec3D(loc.x, loc.y, loc.z);		
 		}
+		
 		
 		void constrainScaling(float scaling){
 			if(loc.magnitude() > radius + 50){
@@ -205,9 +242,11 @@ public class AndreaRossi extends EmptySketch {
 			}	
 		}
 		
+		
 		void spinAround(){			
 			loc.rotateZ(theta);
 		}
+		
 		
 		void display(){
 			
@@ -228,8 +267,12 @@ public class AndreaRossi extends EmptySketch {
 		}	
 		
 	}	
+
 	
 	
+	
+	
+	//reading data and create new receiver objetcs
 private void read () {
 		
 		if(dataAL.size()!=0){
@@ -239,7 +282,7 @@ private void read () {
 			
 			
 			if(recCollection.size()==0){
-				Rcvr nuRec= new Rcvr(ds.id,new Vec3D(ds.x,ds.y,ds.z));
+				Rcvr nuRec= new Rcvr(ds.id,new Vec3D(ds.x,ds.y,ds.z), parent.floor(parent.random(points.size())));
 				recCollection.add(nuRec);
 			}
 			else{
@@ -254,7 +297,7 @@ private void read () {
 			          }
 				}
 		        if (addNew==true) {
-		            Rcvr nuRec= new Rcvr(ds.id, new Vec3D(ds.x,ds.y,ds.z));    
+		            Rcvr nuRec= new Rcvr(ds.id, new Vec3D(ds.x,ds.y,ds.z), parent.floor(parent.random(points.size())));    
 		            recCollection.add(nuRec);
 		          }
 			}
