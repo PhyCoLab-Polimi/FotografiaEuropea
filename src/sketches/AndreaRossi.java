@@ -37,6 +37,9 @@ public class AndreaRossi extends EmptySketch {
 	
 	float innerScale =  (float) 3;
 	
+	float minAccScale = (float) 1;
+	float maxAccScale = (float) 5;
+	
 	
 	public void setup () {
 		
@@ -56,6 +59,7 @@ public class AndreaRossi extends EmptySketch {
 	public void draw() {
 		
 		parent.background(0);
+		parent.colorMode(PApplet.RGB, 255, 255, 255, 255);
 		
 		int count = References.data.size();
 		
@@ -69,59 +73,94 @@ public class AndreaRossi extends EmptySketch {
 		
 		
 		float totAdd = 0;
-		
+			
 		for (int i=0; i<recCollection.size(); i++) {
 		    Rcvr theRec= (Rcvr) recCollection.get(i);
-			
-			
+					
 			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
 			totAdd += Math.abs(massAdd);
 			
 			Pt p = points.get(theRec.pointID);
 			
+			float accScale;
 			
-			Vec3D innerPt = new Vec3D(p.loc.x/innerScale, p.loc.y/innerScale, p.loc.z/innerScale);
+			if(massAdd > 0){
+				accScale = parent.map(massAdd, 0, 6, minAccScale, maxAccScale);			
+			}
+			else{
+				accScale = parent.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
+			}
+			
+			Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
 						
-			parent.noStroke();
-			
-			float stSize = parent.map(massAdd, -2, 2, 5, 50);
-			stSize = parent.constrain(stSize, 0, 100);
-			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), stSize*20);
-			
-			parent.ellipse(innerPt.x + p.center.x, innerPt.y + p.center.y, stSize, stSize);
-			
+						
 			int numConnections = parent.floor(parent.map(massAdd, -2, 2, 3, (float) (recCollection.size()/1.2)));
 			
 			numConnections = parent.constrain(numConnections, 3, parent.floor((float) (recCollection.size()/1.2)));
 			
 			for (int j=0; j<numConnections; j++) {
 				if(i != j){
-						Rcvr theRec2= (Rcvr) recCollection.get(j);
+					Rcvr theRec2= (Rcvr) recCollection.get(j);
 						
-						float massAdd2 = theRec2.acc.x + theRec2.acc.y + theRec2.acc.z;
+					float massAdd2 = theRec2.acc.x + theRec2.acc.y + theRec2.acc.z;
 						
-						Pt p2 = points.get(theRec2.pointID);
+					float accScale2;
 						
-						Vec3D innerPt2 = new Vec3D(p2.loc.x/innerScale, p2.loc.y/innerScale, p2.loc.z/innerScale);
+					if(massAdd2> 0){
+						accScale2 = parent.map(massAdd2, 0, 6, minAccScale, maxAccScale);			
+					}
+					else{
+						accScale2 = parent.map(massAdd2, -6, 0, -maxAccScale, -minAccScale);
+					}
 						
-						parent.stroke(255, 100);
-						parent.strokeWeight(1);
+					Pt p2 = points.get(theRec2.pointID);
 						
-						parent.line(innerPt.x + p.center.x, innerPt.y + p.center.y, innerPt2.x + p.center.x, innerPt2.y + p.center.y);
+					Vec3D innerPt2 = new Vec3D(p2.loc.x/(innerScale*accScale2), p2.loc.y/(innerScale*accScale2), p2.loc.z/(innerScale*accScale2));
+						
+					parent.stroke(255, 50);
+					parent.strokeWeight(1);
+						
+					parent.line(innerPt.x + p.center.x, innerPt.y + p.center.y, innerPt2.x + p.center.x, innerPt2.y + p.center.y);
 
-				}
+				}			    
 			    
-			    
-			}
-			
+			}			
 		}
 		
 		
 		
-		totAdd = PApplet.map(totAdd, 0, 4*count, 0.935f, 1.22f);
+		for (int i=0; i<recCollection.size(); i++) {
+			Rcvr theRec= (Rcvr) recCollection.get(i);
+			
+			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
+			
+			Pt p = points.get(theRec.pointID);
+			
+			p.isActive = true;
+			
+			float accScale;
+			
+			if(massAdd > 0){
+				accScale = parent.map(massAdd, 0, 6, minAccScale, maxAccScale);			
+			}
+			else{
+				accScale = parent.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
+			}
+			
+			Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
+			
+			parent.noStroke();
+			float stSize = parent.map(Math.abs(massAdd), 0, 6, 20, 100);
+			stSize = parent.constrain(stSize, 0, 100);
+			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), (float) (stSize*5));
+			
+			parent.ellipse(innerPt.x + p.center.x, innerPt.y + p.center.y, stSize, stSize);
+			
+		}		
 		
 		
-		
+		totAdd = PApplet.map(totAdd, 0, 4*count, 0.935f, 1.22f);		
+				
 		for(Pt p : points){
 			p.run(totAdd);
 		}
@@ -177,6 +216,7 @@ public class AndreaRossi extends EmptySketch {
 		Vec3D[] tail;
 		int tailLenght = 5;
 		
+		boolean isActive = false;
 		
 		
 		Vec3D center = new Vec3D(parent.width/2, parent.height/2, 0);
@@ -192,7 +232,7 @@ public class AndreaRossi extends EmptySketch {
 			
 			float r = (float) parent.random(1);
 			
-			theta = parent.random(-0.08f, 0.04f);
+			theta = parent.random(-0.06f, 0.02f);
 			
 			dim = parent.random(6);
 			
@@ -205,15 +245,18 @@ public class AndreaRossi extends EmptySketch {
 		
 		
 		void run(float _scaling){
-					
-			display();
-			spinAround();
-			constrainScaling(_scaling);
-			if(parent.frameCount % 2 == 0){
-				updateTail();
+			
+			if(!isActive){
+				display();
+				spinAround();
+				constrainScaling(_scaling);
+				if(parent.frameCount % 1 == 0){
+					updateTail();
+				}				
 			}
 			
-				
+					
+			isActive = false;	
 			
 		}
 		
