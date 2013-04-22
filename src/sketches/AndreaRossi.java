@@ -150,7 +150,7 @@ public class AndreaRossi extends EmptySketch {
 			Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
 			
 			parent.noStroke();
-			float stSize = parent.map(Math.abs(massAdd), 0, 6, 20, 100);
+			float stSize = parent.map(Math.abs(massAdd), 0, 6, 20, 60);
 			stSize = parent.constrain(stSize, 0, 100);
 			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), (float) (stSize*5));
 			
@@ -164,44 +164,6 @@ public class AndreaRossi extends EmptySketch {
 		for(Pt p : points){
 			p.run(totAdd);
 		}
-		
-		
-		/*
-		parent.ellipseMode(2);
-		
-		for(int i = 0; i < dataAL.size(); i++){
-			DataStruct ds = dataAL.get(i);
-			
-			// creating balls moving up and down, changing color and scaling according to acc values
-			float massAdd = ds.x + ds.y + ds.z;
-			
-			float yPos = parent.map(ds.y, -2, 2, 200, 568);
-			
-			//float r = parent.map(ds.x, -2, 2, 100, 255);
-			float g = parent.map(ds.y, -2, 2, 25, 255);
-			float b = parent.map(ds.z, -2, 2, 25, 255);
-			
-			parent.noStroke();
-			parent.fill(0, g, b);
-			
-			parent.ellipse(i*50 + 50, yPos, massAdd*7.5f, massAdd*7.5f);
-			
-			
-			// creating polyline between points
-			if(i != 0){
-				DataStruct prevDs = dataAL.get(i - 1);
-				
-				float prevYPos = parent.map(prevDs.y, -2, 2, 200, 568);
-				
-				parent.stroke(255, 100);
-				parent.strokeWeight(2);
-				
-				parent.line(i*50, prevYPos, i*50 + 50, yPos);
-				
-			}			
-		}
-		
-		*/
 	}
 	
 	
@@ -250,7 +212,7 @@ public class AndreaRossi extends EmptySketch {
 				display();
 				spinAround();
 				constrainScaling(_scaling);
-				if(parent.frameCount % 1 == 0){
+				if(parent.frameCount % 2 == 0){
 					updateTail();
 				}				
 			}
