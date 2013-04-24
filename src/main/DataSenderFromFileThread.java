@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.DatagramPacket;
@@ -26,7 +27,7 @@ public class DataSenderFromFileThread extends Thread{
     	files = new BufferedReader[19];
     	for (int i=0;i<files.length;i++) {
     		try {
-				files[i] = new BufferedReader(new FileReader(".\\simulation-data\\"+i+".txt"));
+    			files[i] = new BufferedReader(new FileReader("./simulation-data/"+i+".txt"));
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
