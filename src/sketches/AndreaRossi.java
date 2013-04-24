@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 
-import toxi.geom.*;
-import processing.opengl.*;
+import toxi.geom.Vec3D;
 
 import main.DataStruct;
 import main.References;
@@ -60,6 +59,7 @@ public class AndreaRossi extends EmptySketch {
 		
 		parent.background(0);
 		parent.colorMode(PApplet.RGB, 255, 255, 255, 255);
+		parent.rectMode(PApplet.CORNER);
 		
 		int count = References.data.size();
 		
@@ -72,67 +72,70 @@ public class AndreaRossi extends EmptySketch {
 		read();
 		
 		
-		float totAdd = 0;
+		
+		if(recCollection.size() > 1){
 			
-		for (int i=0; i<recCollection.size(); i++) {
-		    Rcvr theRec= (Rcvr) recCollection.get(i);
-					
-			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
-			totAdd += Math.abs(massAdd);
-			
-			Pt p = points.get(theRec.pointID);
-			
-			float accScale;
-			
-			if(massAdd > 0){
-				accScale = parent.map(massAdd, 0, 6, minAccScale, maxAccScale);			
+			for (int i=0; i<recCollection.size(); i++) {
+			    Rcvr theRec= (Rcvr) recCollection.get(i);
+						
+				float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
+							
+				Pt p = points.get(theRec.pointID);
+				
+				float accScale;
+				
+				if(massAdd > 0){
+					accScale = parent.map(massAdd, 0, 6, minAccScale, maxAccScale);			
+				}
+				else{
+					accScale = parent.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
+				}
+				
+				Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
+									
+				
+				int numConnections = parent.floor(parent.map(massAdd, -2, 2, 3, (float) (recCollection.size()/1.2)));
+				
+				numConnections = parent.constrain(numConnections, 3, parent.floor((float) (recCollection.size()/1.2)));
+				
+				for (int j=0; j<numConnections; j++) {
+					if(i != j){
+						Rcvr theRec2= (Rcvr) recCollection.get(j);
+							
+						float massAdd2 = theRec2.acc.x + theRec2.acc.y + theRec2.acc.z;
+							
+						float accScale2;
+							
+						if(massAdd2> 0){
+							accScale2 = parent.map(massAdd2, 0, 6, minAccScale, maxAccScale);			
+						}
+						else{
+							accScale2 = parent.map(massAdd2, -6, 0, -maxAccScale, -minAccScale);
+						}
+							
+						Pt p2 = points.get(theRec2.pointID);
+							
+						Vec3D innerPt2 = new Vec3D(p2.loc.x/(innerScale*accScale2), p2.loc.y/(innerScale*accScale2), p2.loc.z/(innerScale*accScale2));
+							
+						parent.stroke(255, 50);
+						parent.strokeWeight(1);
+							
+						parent.line(innerPt.x + p.center.x, innerPt.y + p.center.y, innerPt2.x + p.center.x, innerPt2.y + p.center.y);
+	
+					}			    		    
+				}			
 			}
-			else{
-				accScale = parent.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
-			}
-			
-			Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
-						
-						
-			int numConnections = parent.floor(parent.map(massAdd, -2, 2, 3, (float) (recCollection.size()/1.2)));
-			
-			numConnections = parent.constrain(numConnections, 3, parent.floor((float) (recCollection.size()/1.2)));
-			
-			for (int j=0; j<numConnections; j++) {
-				if(i != j){
-					Rcvr theRec2= (Rcvr) recCollection.get(j);
-						
-					float massAdd2 = theRec2.acc.x + theRec2.acc.y + theRec2.acc.z;
-						
-					float accScale2;
-						
-					if(massAdd2> 0){
-						accScale2 = parent.map(massAdd2, 0, 6, minAccScale, maxAccScale);			
-					}
-					else{
-						accScale2 = parent.map(massAdd2, -6, 0, -maxAccScale, -minAccScale);
-					}
-						
-					Pt p2 = points.get(theRec2.pointID);
-						
-					Vec3D innerPt2 = new Vec3D(p2.loc.x/(innerScale*accScale2), p2.loc.y/(innerScale*accScale2), p2.loc.z/(innerScale*accScale2));
-						
-					parent.stroke(255, 50);
-					parent.strokeWeight(1);
-						
-					parent.line(innerPt.x + p.center.x, innerPt.y + p.center.y, innerPt2.x + p.center.x, innerPt2.y + p.center.y);
-
-				}			    
-			    
-			}			
 		}
 		
 		
+		
+		float totAdd = 0;
 		
 		for (int i=0; i<recCollection.size(); i++) {
 			Rcvr theRec= (Rcvr) recCollection.get(i);
 			
 			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
+			totAdd += Math.abs(massAdd);
 			
 			Pt p = points.get(theRec.pointID);
 			
@@ -310,8 +313,5 @@ private void read () {
 		}
 
 	}
-	}
-
-	
-	
+	}	
 }

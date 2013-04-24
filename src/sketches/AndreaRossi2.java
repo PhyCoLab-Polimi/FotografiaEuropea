@@ -35,13 +35,17 @@ public class AndreaRossi2 extends EmptySketch{
 	}
 	
 	public void draw() {
+		
+		parent.colorMode(PApplet.RGB, 255, 255, 255, 255);
+		parent.rectMode(PApplet.CORNER);
+		
 		if(lineCount == 0 || lineCount % 500 == 0){
 			parent.background(0);
 		}
 		
 		lineCount++;
 		
-		parent.colorMode(PApplet.RGB, 255, 255, 255, 255);
+		
 		
 		parent.noStroke();
 		parent.fill(0, 10);
