@@ -1,12 +1,9 @@
 package sketches;
 
 
-///////////////////TEMPLATE PER TUTTI GLI SKETCH///////////////////
+///////////////////////////////////////////////////////////////TEMPLATE PER TUTTI GLI SKETCH
 
-/*
- * se iniziate a sviluppare un nuovo sketch, copiate ed incollate le parti indicate
- * ogni parte da copiare inizia con il commento di descrzione e finise con /////
- */
+//se iniziate a sviluppare un nuovo sketch, copiate ed incollate le parti indicate 
 
 //import di tutte le librerie necessarie per far funzionare lo sketch (da copiare)
 import java.util.ArrayList;
