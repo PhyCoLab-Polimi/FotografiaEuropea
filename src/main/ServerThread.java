@@ -45,7 +45,7 @@ public class ServerThread extends Thread {
         	References.data.put(fields[0], newDS);	
     	}
     	
-    	System.out.println(dataString);
+    	//System.out.println(dataString);
     }
     
     public void stopListening() {
