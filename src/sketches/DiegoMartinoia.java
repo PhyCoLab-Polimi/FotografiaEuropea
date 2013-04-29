@@ -1,11 +1,18 @@
 package sketches;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import processing.core.PApplet;
+import processing.core.PGraphics;
+import processing.core.PImage;
+import processing.core.PVector;
+import sketches.DiegoMartinoia.Particle;
 import main.DataStruct;
 import main.References;
 
 public class DiegoMartinoia extends EmptySketch{
-	
+	/*
 	short colorColdR = 0;
 	short colorColdG = 0;
 	short colorColdB = 255;
@@ -16,65 +23,71 @@ public class DiegoMartinoia extends EmptySketch{
 	float maxAmplitude;
 	float minRadius = 10;
 	float maxRadius = 300;
+	*/
+	public class Particle {
+
+		  PVector pos;
+		  int ttl;
+		  PImage img;
+		  
+		  public Particle( PVector pos, int ttl) {
+		    this.pos = pos;
+		    this.ttl = ttl;
+		  }
+
+		 
+
+		  
+
+	}
+		  
+
+	private ArrayList<Particle> particles;
+	private float oldX; private float oldY;
 	
 	public void setup() {
-		maxAmplitude = (float) Math.sqrt(5); 
+		//maxAmplitude = (float) Math.sqrt(5); 
+		particles = new ArrayList<Particle>();
+		oldX = References.width/2;
+		oldY = References.height/2;
 	}
 	
 	public void draw() {
-		
-		//Style related stuff
-		parent.pushStyle();
-		parent.ellipseMode(PApplet.CENTER);
-		parent.fill(0);
-		parent.strokeWeight(10);
-		
-		//Black background
-		parent.background(0);
-		
-		float totalAmplitude = 0;
+		float X = 0;
+		float Y = 0;
 		
 		for (String id: References.data.keySet()) {
-			
-			//Random location
-			float x = (float) (Math.random() * References.width);
-			float y = (float) (Math.random() * References.height);
-			
 			DataStruct ds = References.data.get(id);
-			float amplitude = (float) Math.sqrt(Math.pow(ds.x,2) + Math.pow(ds.y,2) + Math.pow(ds.z,2));
-			
-			totalAmplitude += amplitude;
-			
-			//Compute color as gradient between cold and hot using amplitude as measure
-			int colorR = (int) PApplet.map(amplitude, 0, maxAmplitude, colorColdR, colorHotR);
-			colorR = PApplet.constrain(colorR, 0, 255);
-			
-			int colorG = (int) PApplet.map(amplitude, 0, maxAmplitude, colorColdG, colorHotG);
-			colorG = PApplet.constrain(colorG, 0, 255);
-			
-			int colorB = (int) PApplet.map(amplitude, 0, maxAmplitude, colorColdB, colorHotB);
-			colorB = PApplet.constrain(colorB, 0, 255);
-				
-			//Compute radius
-			float radius = PApplet.map(amplitude, 0, maxAmplitude, minRadius, maxRadius);
-			//Re-compose the color
-			int realColor = 0xEE000000 + 0x00010000 * colorR  + 0x00000100 * colorG + 0x00000001 * colorB;
-			
-			parent.stroke(realColor);
-			parent.ellipse(x, y, radius, radius);
+			X += PApplet.map(ds.x, ds.minX, ds.maxX, -1, 1) / 2*References.data.size();
+			Y += PApplet.map(ds.y, ds.minY, ds.maxY, -1, 1) / 2*References.data.size();
 		}
 		
-		//Pop the style
-		parent.popStyle();
+		if (Float.isNaN(X)) X = 0;
+		if (Float.isNaN(Y)) Y = 0;
+		oldX+=10*X; oldX = PApplet.constrain(oldX, 0, References.width);
+		oldY-=10*Y; oldY = PApplet.constrain(oldY, 0, References.height);
+		System.out.println("   "+X+" "+Y);
+		System.out.println(oldX+" "+oldY);
+
+		Iterator<Particle> iter = particles.iterator();
+		while (iter.hasNext()) {
+		    if (iter.next().ttl <=0) iter.remove();
+		}
 		
-		//Sleep a little, proportional to the totalAmplitude
-		int nextSleep = (int) PApplet.map(totalAmplitude, 0, maxAmplitude * References.data.size(), 50, 0);
-		/*try {
-			Thread.sleep(nextSleep);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		for (int i=0; i<2;i++){
+			particles.add(new Particle( new PVector( oldX, oldY), 5));
+		}
+		
+		parent.background(0);
+		parent.fill(255,255,255);
+		parent.ellipseMode(PApplet.CENTER);
+		
+		for(Particle p: particles) {
+			parent.ellipse(p.pos.x, p.pos.y,10,10);
+		    p.ttl--;
+		}
+		
+		
 		
 	}
 }
