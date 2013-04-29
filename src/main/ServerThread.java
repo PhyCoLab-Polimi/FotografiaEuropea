@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Arrays;
 
 public class ServerThread extends Thread {
     DatagramSocket socket;
@@ -25,10 +26,13 @@ public class ServerThread extends Thread {
     		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);	
     	    try {
 				socket.receive(packet);
-	    	    String dataString = new String(packet.getData());
+				
+				byte[] payload = Arrays.copyOf(packet.getData(), packet.getLength());
+				
+	    	    String dataString = new String(payload);
 	    	    processString(dataString);
 	    	    
-			} catch (IOException e) {
+			} catch (Exception e) {
 				System.out.println("Error, can't receive the packet via the socket, continuing to next iteration");
 				e.printStackTrace();
 			}    		
@@ -36,8 +40,10 @@ public class ServerThread extends Thread {
     }
     
     private void processString(String dataString) {
+    	//System.out.println(dataString);
     	String[] fields = dataString.split(" ");
-    	if (References.data.containsKey(fields[0])) {    		
+    	//for (int i=0;i<fields.length;i++) System.out.print(fields[i]+"*");
+    	if (References.data.containsKey(fields[0])) {
     		References.data.get(fields[0]).updateHistory(Float.parseFloat(fields[1]), Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));    		
     	}
     	else {
@@ -45,7 +51,7 @@ public class ServerThread extends Thread {
         	References.data.put(fields[0], newDS);	
     	}
     	
-    	//System.out.println(dataString);
+
     }
     
     public void stopListening() {

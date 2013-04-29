@@ -28,7 +28,7 @@ public class Program extends PApplet {
 		
 		//Start the server listener
 		References.initServer();	
-		References.initSender();
+		//References.initSender();
 		
 		//INSERT SETUP AFTER THIS LINE
 		// ------------------------------------------------
