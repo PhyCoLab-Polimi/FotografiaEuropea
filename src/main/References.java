@@ -1,6 +1,6 @@
 package main;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import processing.core.PApplet;
 
@@ -10,7 +10,7 @@ public class References {
 	
 	public static final int socketPort = 9930;
 	
-	public static HashMap<String, DataStruct> data;
+	public static ConcurrentHashMap<String, DataStruct> data;
 	
 	public static ServerThread serverThread;
 	public static DataSenderFromFileThread senderThread;
@@ -21,7 +21,7 @@ public class References {
 	public static int currentSketch = 0;
 	
 	public static void initServer() {
-		References.data = new HashMap<String, DataStruct>();		
+		References.data = new ConcurrentHashMap<String, DataStruct>();		
 		References.serverThread = new ServerThread();
 		serverThread.start();
 	}
