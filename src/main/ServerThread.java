@@ -41,6 +41,7 @@ public class ServerThread extends Thread {
     
     private void processString(String dataString) {
     	//System.out.println(dataString);
+    	dataString = dataString.replace(',','.');
     	String[] fields = dataString.split(" ");
     	//for (int i=0;i<fields.length;i++) System.out.print(fields[i]+"*");
     	if (References.data.containsKey(fields[0])) {

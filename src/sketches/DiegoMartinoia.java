@@ -25,10 +25,11 @@ public class DiegoMartinoia extends EmptySketch{
 		
 	}
 	public void draw() {
-		parent.fill(0,0,0,20);
+		parent.fill(0,0,0,5);
 		parent.rectMode(PApplet.CORNER);
 		parent.rect(0,0,References.width,References.height);
-		parent.fill(255,255,255,255);  
+		parent.colorMode(PApplet.RGB,255,255,255);
+		parent.fill(255,255,255);
 		
 		
 		for (String id: References.data.keySet()) {
@@ -46,7 +47,7 @@ public class DiegoMartinoia extends EmptySketch{
 			parent.text(names[index],parent.random(References.width), parent.random(References.height));
 		}
 		try {
-			Thread.sleep(100);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
