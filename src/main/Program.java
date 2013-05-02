@@ -34,10 +34,10 @@ public class Program extends PApplet {
 		// ------------------------------------------------
 		
 		sketches = new EmptySketch[8];
-		sketches[0] = new Circles(); sketches[0].setup();
+		sketches[0] = new DiegoMartinoia2(); sketches[0].setup();
 		sketches[1] = new AndreaRossi(); sketches[1].setup();
 		sketches[2] = new AndreaRossi2(); sketches[2].setup();
-		sketches[3] = new GiorgioVignati(); sketches[3].setup();
+		sketches[3] = new Gv_231_01(); sketches[3].setup();
 		sketches[4] = new MartaZambelli(); sketches[4].setup();
 		sketches[5] = new MatteoTaramelli(); sketches[5].setup();
 		sketches[6] = new PaoloAlborghetti(); sketches[6].setup();
@@ -105,8 +105,9 @@ public class Program extends PApplet {
 			this.fill(0);
 			this.rect(0, 0, References.width, References.height);
 			References.currentSketch = i;
-			
 		}
+		else
+			Gv_231_01.getKey(key);
 	}
 
 }
