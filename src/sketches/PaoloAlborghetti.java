@@ -18,7 +18,7 @@ public class PaoloAlborghetti extends EmptySketch {
 	
 	
 	// definizione della classe ricevitore, che andrà a collezionare i dati da utilizzare per la grafica (da copiare)
-	private class Rcvr {
+	public class Rcvr {
 		String UDID;
 		Vec3D acc= new Vec3D(0,0,0);
 		float countx=0;

@@ -34,7 +34,7 @@ public class Program extends PApplet {
 		// ------------------------------------------------
 		
 		sketches = new EmptySketch[8];
-		sketches[0] = new DiegoMartinoia(); sketches[0].setup();
+		sketches[0] = new Circles(); sketches[0].setup();
 		sketches[1] = new AndreaRossi(); sketches[1].setup();
 		sketches[2] = new AndreaRossi2(); sketches[2].setup();
 		sketches[3] = new GiorgioVignati(); sketches[3].setup();
@@ -100,7 +100,13 @@ public class Program extends PApplet {
 	
 	public void keyPressed() {
 		int i = Character.getNumericValue(key);
-		if (i>=0 && i< sketches.length) References.currentSketch = i;
+		if (i>=0 && i< sketches.length) {
+			this.rectMode(PApplet.CORNER);
+			this.fill(0);
+			this.rect(0, 0, References.width, References.height);
+			References.currentSketch = i;
+			
+		}
 	}
 
 }
