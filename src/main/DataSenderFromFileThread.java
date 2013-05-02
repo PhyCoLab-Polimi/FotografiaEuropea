@@ -45,16 +45,17 @@ public class DataSenderFromFileThread extends Thread{
     				String s = files[j].readLine();
     				
     				String[] fields = s.split(",");
-    				
-    				String toSend = j+" "+fields[0]+" "+fields[1]+" "+fields[2];
-    				
-    				byte[] buf = toSend.getBytes();
-    				
-    				InetAddress address = InetAddress.getByName("localhost");
-    				
-    				DatagramPacket packet = new DatagramPacket(buf, buf.length, address, References.socketPort);
-    				
-    				socket.send(packet);
+    				for (int k=0;k<3;k++) {
+	    				String toSend = (j*(k+1))+" "+fields[0]+" "+fields[1]+" "+fields[2];
+	    				
+	    				byte[] buf = toSend.getBytes();
+	    				
+	    				InetAddress address = InetAddress.getByName("localhost");
+	    				
+	    				DatagramPacket packet = new DatagramPacket(buf, buf.length, address, References.socketPort);
+	    				
+	    				socket.send(packet);
+    				}
     			}
     			
     			

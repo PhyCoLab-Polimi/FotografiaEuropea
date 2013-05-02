@@ -1,5 +1,6 @@
 package sketches;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import processing.core.PApplet;
@@ -7,39 +8,72 @@ import main.DataStruct;
 import main.References;
 
 public class TomasoBaj extends EmptySketch {
+
+	private int steps = 20;
+	private int maxStep = 100;
 	
-	private int baseSize = 20;
-	private int randomSize = 5;
+	private int [] colors = {
+			0xFFFF0000, 
+			0xFFFF7F00, 
+			0xFFFFFF00,
+			0XFF00FF00,
+			0xFF0000FF,
+			0xFF4B0082,
+			0xFF8F00FF
+		};
 	
-	HashMap<String, Point> points;
+
+	HashMap<String, ArrayList<Point>> points;
 	
-	public void setup () {
-		points = new HashMap<String, Point>();
-	}
+	public void setup(){ points  = new HashMap<String, ArrayList<TomasoBaj.Point>>();}
 	
 	public void draw() {
-		parent.fill(0,0,0,4);
-		parent.rectMode(PApplet.CORNER);
-		parent.rect(0,0,References.width, References.height);
-		parent.colorMode(PApplet.HSB, 360, 100, 100, 100);
-		parent.noStroke();
-		parent.ellipseMode(PApplet.CENTER);
 		
+		parent.colorMode(PApplet.RGB,255,255,255,255);
+		parent.fill(0);
+		parent.rectMode(PApplet.CORNER);
+		parent.rect(0, 0, References.width, References.height);
+		
+		int j=0;
 		for (String id: References.data.keySet()) {
+			
 			DataStruct ds = References.data.get(id);
-			Point p;
+			
+			ArrayList<Point> ps;
 			if(points.containsKey(id)) {
-				p = points.get(id);
+				ps = points.get(id);
 			}
 			else {
-				p = new Point();
-				points.put(id, p);
+				ps = new ArrayList<Point>();
+				points.put(id, ps);
 			}
 			
-			parent.fill(parent.color(PApplet.map(ds.z, ds.minZ, ds.maxZ, 0, 360), 50, 50, 100));
-			int X = (int) PApplet.map(ds.x, ds.minX, ds.maxX, 0, 50);//References.width);
-			int Y = (int) PApplet.map(ds.y, ds.minY, ds.maxY, 0, 50);//References.height);
-			parent.ellipse(p.x+X,p.y+Y,baseSize+parent.random(-randomSize,+randomSize), baseSize+parent.random(-randomSize,+randomSize));
+			if (ps.size() < steps) {
+				float dx = PApplet.map(PApplet.abs(ds.x), 0, PApplet.max(PApplet.abs(ds.minX), ds.maxX), 0, 1);
+				float dy = PApplet.map(PApplet.abs(ds.y), 0, PApplet.max(PApplet.abs(ds.minY), ds.maxY), 0, 1);
+				float dz = PApplet.map(PApplet.abs(ds.y), 0, PApplet.max(PApplet.abs(ds.minZ), ds.maxZ), 0, 1);
+				float t = dx+dy+dz;
+				float d = PApplet.map( t, 0, 3, 0, 1) * maxStep;
+				
+				Point p = new Point();
+				if (ps.size() > 0) {
+					float angle = parent.random(-PApplet.PI, PApplet.PI);
+					p.x = (int) (ps.get(ps.size()-1).x + d * PApplet.cos(angle));
+					p.y = (int) (ps.get(ps.size()-1).y + d * PApplet.sin(angle));
+				}
+				ps.add(p);
+				
+				parent.stroke(colors[j%colors.length], 200);
+				for (int i = 0; i<ps.size()-1;i++) {
+					parent.line(ps.get(i).x, ps.get(i).y, ps.get(i+1).x, ps.get(i+1).y);
+				}
+				
+				j++;
+			}
+			else {
+				points.remove(id);
+			}
+			
 		}
 		
 	}
@@ -51,7 +85,6 @@ public class TomasoBaj extends EmptySketch {
 			x = (int) parent.random(0, References.width);
 			y = (int) parent.random(0, References.height); 
 		}
-		
-	}
 
+	}
 }

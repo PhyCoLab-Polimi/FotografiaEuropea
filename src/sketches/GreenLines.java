@@ -8,7 +8,7 @@ import main.DataStruct;
 import main.References;
 import toxi.geom.Vec3D;
 
-public class AndreaRossi2 extends EmptySketch{
+public class GreenLines extends EmptySketch{
 	
 	private class Rcvr {
 		String UDID;
@@ -75,7 +75,7 @@ public class AndreaRossi2 extends EmptySketch{
 			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
 			totAcc += Math.abs(massAdd);
 			
-			float yPos = parent.map(theRec.acc.y, -2, 2, 200, 568);
+			float yPos = parent.map(theRec.acc.y, -2, 2, 0, References.height);
 			
 			//float r = parent.map(theRec.acc.x, -2, 2, 100, 255);
 			float g = parent.map(theRec.acc.y, -2, 2, 25, 255);
@@ -91,7 +91,7 @@ public class AndreaRossi2 extends EmptySketch{
 			if(i != 0){
 				Rcvr prevRec = (Rcvr) recCollection.get(i - 1);
 				
-				float prevYPos = parent.map(prevRec.acc.y, -2, 2, 200, 568);
+				float prevYPos = parent.map(prevRec.acc.y, -2, 2, 0, References.height);
 				
 				parent.stroke(255, 100);
 				parent.strokeWeight(2);

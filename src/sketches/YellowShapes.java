@@ -22,7 +22,7 @@ import main.References;
 
  
 
-public class DiegoMartinoia2 extends EmptySketch {
+public class YellowShapes extends EmptySketch {
 
  
 
@@ -126,11 +126,10 @@ public void draw() {
 
 DataStruct ds = References.data.get(id);
 
-float acc = PApplet.map(ds.x, minAmp,maxAmp,minSpeed,maxSpeed);
 
-float acc2 = PApplet.map(ds.y, minAmp,maxAmp,minSpeed,maxSpeed);
-
-float acc3 = PApplet.map(ds.z, minAmp,maxAmp,minSpeed,maxSpeed);
+float acc = PApplet.map(PApplet.abs(ds.x), 0, PApplet.max(PApplet.abs(ds.minX), ds.maxX), minSpeed, maxSpeed);
+float acc2 = PApplet.map(PApplet.abs(ds.y), 0, PApplet.max(PApplet.abs(ds.minY), ds.maxY), minSpeed, maxSpeed);
+float acc3 = PApplet.map(PApplet.abs(ds.z), 0, PApplet.max(PApplet.abs(ds.minZ), ds.maxZ), minSpeed, maxSpeed);
 
  
 
@@ -148,7 +147,6 @@ numCell++;
 
 calcSpeed= calcSpeed/numCell/3;
 
-System.out.println(calcSpeed);
 
  
 

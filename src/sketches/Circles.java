@@ -23,11 +23,9 @@ public class Circles extends EmptySketch {
 	
 	public void draw() {
 		
-		
-		
 		randomSize = (int) (parent.random(0,15));
 		
-		parent.fill(0,0,0,1);
+		parent.fill(0,0,0,3);
 		parent.rectMode(PApplet.CORNER);
 		parent.rect(0,0,References.width, References.height);
 		parent.colorMode(PApplet.HSB, 360, 100, 100, 100);
@@ -47,10 +45,14 @@ public class Circles extends EmptySketch {
 			
 
 			
-			parent.fill(parent.color(PApplet.map(ds.x+ds.y, ds.minZ, ds.maxZ, 0, 360), 70, 85, 20));
+			parent.fill(parent.color(PApplet.map(ds.x+ds.y, ds.minZ, ds.maxZ, 0, 360), 70, 85, 15));
 			int X = (int) PApplet.map(ds.x, ds.minX, ds.maxX, 0, 50);//References.width);
 			int Y = (int) PApplet.map(ds.y, ds.minY, ds.maxY, 0, 50);//References.height);
-			parent.ellipse(p.x+X+addx,p.y+Y+addy,baseSize+randomSize, baseSize+randomSize);
+			baseSize = X + Y;
+			parent.ellipse(	PApplet.constrain(p.x+X+addx, 0, References.width), 
+							PApplet.constrain(p.y+Y+addy, 0, References.height),
+							baseSize+randomSize, 
+							baseSize+randomSize);
 		}
 
 		addx = addx + (int) parent.random(-2,2);

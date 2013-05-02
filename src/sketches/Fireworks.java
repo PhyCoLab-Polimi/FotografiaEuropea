@@ -14,7 +14,7 @@ import main.References;
 /////
 
 // non copiate questa linea, definisce l'identità univoca di ciascuno dei vostri sketches
-public class Gv_231_01 extends EmptySketch {	
+public class Fireworks extends EmptySketch {	
 	static int lWidth;
 	static int xAmpl ;
 	static int yAmpl ;

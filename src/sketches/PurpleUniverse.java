@@ -9,7 +9,7 @@ import toxi.geom.Vec3D;
 import main.DataStruct;
 import main.References;
 
-public class AndreaRossi extends EmptySketch {
+public class PurpleUniverse extends EmptySketch {
 	
 	private class Rcvr {
 		String UDID;

@@ -33,15 +33,16 @@ public class Program extends PApplet {
 		//INSERT SETUP AFTER THIS LINE
 		// ------------------------------------------------
 		
-		sketches = new EmptySketch[8];
-		sketches[0] = new DiegoMartinoia2(); sketches[0].setup();
-		sketches[1] = new AndreaRossi(); sketches[1].setup();
-		sketches[2] = new AndreaRossi2(); sketches[2].setup();
-		sketches[3] = new Gv_231_01(); sketches[3].setup();
-		sketches[4] = new MartaZambelli(); sketches[4].setup();
-		sketches[5] = new MatteoTaramelli(); sketches[5].setup();
+		sketches = new EmptySketch[9];
+		sketches[0] = new YellowShapes(); sketches[0].setup();
+		sketches[1] = new TomasoBaj(); sketches[1].setup();
+		sketches[2] = new GreenLines(); sketches[2].setup();
+		sketches[3] = new Fireworks(); sketches[3].setup();
+		sketches[4] = new BWHistogram(); sketches[4].setup();
+		sketches[5] = new Butterfly(); sketches[5].setup();
 		sketches[6] = new PaoloAlborghetti(); sketches[6].setup();
 		sketches[7] = new TomasoBaj(); sketches[7].setup();
+		sketches[8] = new Circles(); sketches[8].setup();
 	}
 	
 	public void draw() {
@@ -102,12 +103,13 @@ public class Program extends PApplet {
 		int i = Character.getNumericValue(key);
 		if (i>=0 && i< sketches.length) {
 			this.rectMode(PApplet.CORNER);
-			this.fill(0);
+			this.fill(0,0,0,255);
 			this.rect(0, 0, References.width, References.height);
+			sketches[i].setup();
 			References.currentSketch = i;
 		}
 		else
-			Gv_231_01.getKey(key);
+			Fireworks.getKey(key);
 	}
 
 }

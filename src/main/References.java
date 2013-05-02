@@ -16,7 +16,7 @@ public class References {
 	public static DataSenderFromFileThread senderThread;
 
 	public static int width = 1024;
-	public static int height = 768;
+	public static int height = 384;
 	
 	public static int currentSketch = 0;
 	

@@ -7,7 +7,7 @@ import toxi.geom.*;
 import main.DataStruct;
 
 
-public class MatteoTaramelli extends EmptySketch {
+public class Butterfly extends EmptySketch {
 	
 	private class Rcvr {
 		String UDID;
@@ -46,7 +46,7 @@ public class MatteoTaramelli extends EmptySketch {
 		
 		execute();
 		
-		PApplet.println(recCollection.size());
+		//PApplet.println(recCollection.size());
 		
 	}
 	
