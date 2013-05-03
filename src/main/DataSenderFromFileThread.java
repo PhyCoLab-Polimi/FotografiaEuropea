@@ -46,7 +46,7 @@ public class DataSenderFromFileThread extends Thread{
     				String s = files[j].readLine();
     				
     				String[] fields = s.split(",");
-    				for (int k=0;k<10;k++) {
+    				for (int k=0;k<3;k++) {
 	    				String toSend = (id+" "+fields[0]+" "+fields[1]+" "+fields[2]);
 	    				
 	    				byte[] buf = toSend.getBytes();

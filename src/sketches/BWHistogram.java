@@ -24,13 +24,15 @@ public class BWHistogram extends EmptySketch {
 	
 	private int alphaSat = 100;
 	
-	
+	Object[] data;
 	
 	public void setup () {
 		
 		//parent.colorMode(PApplet.HSB);
 		parent.colorMode(PApplet.RGB,255,255,255,255);
 		parent.stroke(255,255,255,200);
+		
+		data = References.data.values().toArray();
 	}
 	
 	public void draw() {
@@ -38,20 +40,16 @@ public class BWHistogram extends EmptySketch {
 		parent.background(0);
 		parent.rectMode(PApplet.CORNER);
 		parent.colorMode(PApplet.RGB,255,255,255);
-		parent.fill(0);
-		parent.rect(0,0,References.width, References.height);
 		
 		numberOfLines = (int) Math.min(7, References.data.size());
 		maxHeight = (References.height-firstStep)/numberOfLines;
-		
-		Object[] data = References.data.values().toArray();
+		int numberOfPoints = (data.length / numberOfLines);
 		
 		for (int i=0; i<numberOfLines;i++) {
 			//parent.fill(128,0,0,alphaSat+(i%2)*(255-alphaSat));
 			//parent.fill(128,0,0,100+i*(255/numberOfLines));
 			parent.fill(colors[i%colors.length], alphaSat+i*((255-alphaSat)/numberOfLines));
 			
-			int numberOfPoints = (data.length / numberOfLines);
 			float stepX = References.width / (numberOfPoints+1);
 			parent.beginShape();
 			parent.vertex(0,firstStep + maxHeight * (1+i));

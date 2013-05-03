@@ -36,7 +36,7 @@ public class PurpleUniverse extends EmptySketch {
 	float innerScale =  (float) 3;
 	
 	float minAccScale = (float) 1;
-	float maxAccScale = (float) 5;
+	float maxAccScale = (float) 3;
 	
 	
 	public void setup () {
@@ -46,7 +46,7 @@ public class PurpleUniverse extends EmptySketch {
 		points = new ArrayList<Pt>();
 		
 		for(int i = 0; i < 500; i++){			
-			float radius = parent.random(200, 350);			
+			float radius = parent.random(References.height/4, References.height/2);			
 			float angle = parent.random(PConstants.PI *2);			
 			Pt p = new Pt(radius, angle);			
 			points.add(p);		
@@ -152,8 +152,7 @@ public class PurpleUniverse extends EmptySketch {
 			Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
 			
 			parent.noStroke();
-			float stSize = PApplet.map(Math.abs(massAdd), 0, 6, 20, 60);
-			stSize = PApplet.constrain(stSize, 0, 100);
+			float stSize = PApplet.map(Math.abs(massAdd), 0, 6, 20, 50);
 			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), (float) (stSize*5));
 			
 			parent.ellipse(innerPt.x + p.center.x, innerPt.y + p.center.y, stSize, stSize);
@@ -237,7 +236,7 @@ public class PurpleUniverse extends EmptySketch {
 					loc.scaleSelf(scaling);
 				}			
 			}
-			else if(loc.magnitude() < radius - 200){
+			else if(loc.magnitude() < radius - 500){
 				if(scaling > 1){
 					loc.scaleSelf(scaling);
 				}
