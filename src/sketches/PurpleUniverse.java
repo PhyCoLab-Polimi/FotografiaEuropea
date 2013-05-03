@@ -33,10 +33,14 @@ public class PurpleUniverse extends EmptySketch {
 	
 	ArrayList<Pt> points;
 	
-	float innerScale =  (float) 3;
+	float innerScale =  (float) 2.8; //controlla la dimensione delle geometrie interne
 	
 	float minAccScale = (float) 1;
 	float maxAccScale = (float) 3;
+	
+	float numConnScale = (float) 2.5; //controlla il numero di connessioni tra i vari punti interni
+	
+	float transparency = (float) 7.5; //controlla la trasparenza dei cerchi purple
 	
 	
 	public void setup () {
@@ -46,7 +50,7 @@ public class PurpleUniverse extends EmptySketch {
 		points = new ArrayList<Pt>();
 		
 		for(int i = 0; i < 500; i++){			
-			float radius = parent.random(References.height/4, References.height/2);			
+			float radius = parent.random(References.height/3, (float) (References.height/1.5));			
 			float angle = parent.random(PConstants.PI *2);			
 			Pt p = new Pt(radius, angle);			
 			points.add(p);		
@@ -59,6 +63,7 @@ public class PurpleUniverse extends EmptySketch {
 		parent.background(0);
 		parent.colorMode(PApplet.RGB, 255, 255, 255, 255);
 		parent.rectMode(PApplet.CORNER);
+		parent.ellipseMode(PApplet.CENTER);
 		
 		int count = References.data.size();
 		
@@ -71,10 +76,12 @@ public class PurpleUniverse extends EmptySketch {
 		read();
 		
 		
+		int limit =  Math.min(recCollection.size()+1, 100);
 		
-		if(recCollection.size() > 1){
+		
+		if(limit > 1){
 			
-			for (int i=0; i<recCollection.size(); i++) {
+			for (int i=0; i < limit - 1; i++) {
 			    Rcvr theRec= (Rcvr) recCollection.get(i);
 						
 				float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
@@ -93,11 +100,11 @@ public class PurpleUniverse extends EmptySketch {
 				Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
 									
 				
-				int numConnections = PApplet.floor(PApplet.map(massAdd, -2, 2, 3, (float) (recCollection.size()/1.2)));
+				int numConnections = PApplet.floor(PApplet.map(massAdd, -2, 2, 3, (float) (limit/numConnScale)));
 				
-				numConnections = PApplet.constrain(numConnections, 3, PApplet.floor((float) (recCollection.size()/1.2)));
+				numConnections = PApplet.constrain(numConnections, 3, PApplet.floor((float) (limit/numConnScale)));
 				
-				for (int j=0; j<recCollection.size(); j++) {
+				for (int j=0; j < limit - 1; j++) {
 					if(i != j){
 						Rcvr theRec2= (Rcvr) recCollection.get(j);
 							
@@ -130,7 +137,7 @@ public class PurpleUniverse extends EmptySketch {
 		
 		float totAdd = 0;
 		
-		for (int i=0; i<recCollection.size(); i++) {
+		for (int i=0; i < limit - 1; i++) {
 			Rcvr theRec= (Rcvr) recCollection.get(i);
 			
 			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
@@ -153,7 +160,9 @@ public class PurpleUniverse extends EmptySketch {
 			
 			parent.noStroke();
 			float stSize = PApplet.map(Math.abs(massAdd), 0, 6, 20, 50);
-			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), (float) (stSize*5));
+			stSize = parent.constrain(stSize, 20, 50);
+			
+			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), (float) (stSize*transparency));
 			
 			parent.ellipse(innerPt.x + p.center.x, innerPt.y + p.center.y, stSize, stSize);
 			

@@ -27,6 +27,10 @@ public class GreenLines extends EmptySketch{
 	
 	int lineCount = 0;
 	
+	float linesAmount = (float) 1; //quantità di linee orizzontali
+	float upLimit = (float) 10; //cambiate questo valore per stringere la fascia in cui si muove
+	
+	
 	public void setup () {
 		parent.background(0);
 	}
@@ -35,6 +39,7 @@ public class GreenLines extends EmptySketch{
 		
 		parent.colorMode(PApplet.RGB, 255, 255, 255, 255);
 		parent.rectMode(PApplet.CORNER);
+		parent.ellipseMode(PApplet.CENTER);
 		
 		if(lineCount == 0 || lineCount % 500 == 0){
 			parent.background(0);
@@ -67,14 +72,15 @@ public class GreenLines extends EmptySketch{
 		
 		float xDist = (float)parent.width/limit;
 		
-		for(int i = 0; i < limit; i++){
+		for(int i = 0; i < limit - 1; i++){
 			Rcvr theRec= (Rcvr) recCollection.get(i);
 			
 			// creating balls moving up and down, changing color and scaling according to acc values
 			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
 			totAcc += Math.abs(massAdd);
 			
-			float yPos = PApplet.map(theRec.acc.y, -2, 2, 0, References.height);
+			float yPos = PApplet.map(theRec.acc.y, -2, 2, 20, References.height - 20);
+			yPos = parent.constrain(yPos, upLimit, References.height - upLimit);
 			
 			//float r = parent.map(theRec.acc.x, -2, 2, 100, 255);
 			float g = PApplet.map(theRec.acc.y, -2, 2, 25, 255);
@@ -90,7 +96,8 @@ public class GreenLines extends EmptySketch{
 			if(i != 0){
 				Rcvr prevRec = (Rcvr) recCollection.get(i - 1);
 				
-				float prevYPos = PApplet.map(prevRec.acc.y, -2, 2, 0, References.height);
+				float prevYPos = PApplet.map(prevRec.acc.y, -2, 2, 20, References.height -20);
+				prevYPos = parent.constrain(prevYPos, upLimit, References.height - upLimit);
 				
 				parent.stroke(255, 100);
 				parent.strokeWeight(2);
@@ -101,9 +108,9 @@ public class GreenLines extends EmptySketch{
 		}
 		
 		
-		if(totAcc/recCollection.size() > 1){			
+		if(totAcc/(limit - 1) > linesAmount){
 			parent.stroke(255, parent.random(50, 200));			
-			parent.strokeWeight((float) 0.5);			
+			parent.strokeWeight((float) 0.75);			
 			float yPos = parent.random(parent.height);			
 			parent.line(0, yPos, parent.width, yPos);			
 			
