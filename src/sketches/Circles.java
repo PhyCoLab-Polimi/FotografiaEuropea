@@ -10,7 +10,6 @@ public class Circles extends EmptySketch {
 	
 	private int baseSize = 35;
 	private int randomSize = (int) (parent.random(0,15));
-	private int time = 0;
 	
 	private int addx;
 	private int addy;
@@ -24,7 +23,7 @@ public class Circles extends EmptySketch {
 	public void draw() {
 		
 		randomSize = (int) (parent.random(0,15));
-		
+		parent.noStroke();
 		parent.fill(0,0,0,3);
 		parent.rectMode(PApplet.CORNER);
 		parent.rect(0,0,References.width, References.height);

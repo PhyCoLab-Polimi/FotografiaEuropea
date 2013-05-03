@@ -2,19 +2,7 @@
 package sketches;
  
 
-import java.util.ArrayList;
-
- 
-
 import processing.core.PApplet;
-
-import processing.core.PImage;
-
- 
-
-import sketches.PaoloAlborghetti.Rcvr;
-
-import toxi.geom.Vec3D;
 
 import main.DataStruct;
 

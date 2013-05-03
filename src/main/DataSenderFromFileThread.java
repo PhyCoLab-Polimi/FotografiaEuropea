@@ -1,7 +1,6 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.DatagramPacket;
@@ -41,12 +40,14 @@ public class DataSenderFromFileThread extends Thread{
     	for (int i=0;i<500;i++) {
     		try {
     			//Read next line and send the data string:
+    			int id = 0;
     			for (int j=0; j<19;j++) {
+    				
     				String s = files[j].readLine();
     				
     				String[] fields = s.split(",");
-    				for (int k=0;k<3;k++) {
-	    				String toSend = (j*(k+1))+" "+fields[0]+" "+fields[1]+" "+fields[2];
+    				for (int k=0;k<10;k++) {
+	    				String toSend = (id+" "+fields[0]+" "+fields[1]+" "+fields[2]);
 	    				
 	    				byte[] buf = toSend.getBytes();
 	    				
@@ -55,6 +56,8 @@ public class DataSenderFromFileThread extends Thread{
 	    				DatagramPacket packet = new DatagramPacket(buf, buf.length, address, References.socketPort);
 	    				
 	    				socket.send(packet);
+	    				
+	    				id++;
     				}
     			}
     			

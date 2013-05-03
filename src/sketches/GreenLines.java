@@ -13,9 +13,6 @@ public class GreenLines extends EmptySketch{
 	private class Rcvr {
 		String UDID;
 		Vec3D acc= new Vec3D(0,0,0);
-		float countx=0;
-		float county=0;
-
 		
 		Rcvr(String _UDID, Vec3D _acc){
 		    
@@ -75,11 +72,11 @@ public class GreenLines extends EmptySketch{
 			float massAdd = theRec.acc.x + theRec.acc.y + theRec.acc.z;
 			totAcc += Math.abs(massAdd);
 			
-			float yPos = parent.map(theRec.acc.y, -2, 2, 0, References.height);
+			float yPos = PApplet.map(theRec.acc.y, -2, 2, 0, References.height);
 			
 			//float r = parent.map(theRec.acc.x, -2, 2, 100, 255);
-			float g = parent.map(theRec.acc.y, -2, 2, 25, 255);
-			float b = parent.map(theRec.acc.z, -2, 2, 25, 255);
+			float g = PApplet.map(theRec.acc.y, -2, 2, 25, 255);
+			float b = PApplet.map(theRec.acc.z, -2, 2, 25, 255);
 			
 			parent.noStroke();
 			parent.fill(0, g, b, 200);
@@ -91,7 +88,7 @@ public class GreenLines extends EmptySketch{
 			if(i != 0){
 				Rcvr prevRec = (Rcvr) recCollection.get(i - 1);
 				
-				float prevYPos = parent.map(prevRec.acc.y, -2, 2, 0, References.height);
+				float prevYPos = PApplet.map(prevRec.acc.y, -2, 2, 0, References.height);
 				
 				parent.stroke(255, 100);
 				parent.strokeWeight(2);
@@ -113,19 +110,6 @@ public class GreenLines extends EmptySketch{
 		
 	}
 	
-	
-	private class Pt{
-		
-		Vec3D loc;
-		
-		Vec3D[] prevPos;
-		
-		
-		Pt(){
-			
-		}
-		
-	}
 	
 	
 private void read () {

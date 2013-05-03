@@ -27,8 +27,6 @@ public class Fireworks extends EmptySketch {
 	private class Rcvr {
 		String UDID;
 		Vec3D acc= new Vec3D(0,0,0);
-		float countx=0;
-		float county=0;
 		
 		Rcvr(String _UDID, Vec3D _acc){
 		    
@@ -69,10 +67,6 @@ public class Fireworks extends EmptySketch {
 //		parent.rectMode(PApplet.CORNER); // modalità di disegno dei rettangoli: CENTER o CORNER
 		/////
 		
-		// calcolo numero di Iphones attualmente connessi (da copiare)
-		int count = References.data.size();
-		/////
-		
 		// trasformazione dati da hashmap ad arraylist (da copiare) 
 		dataAL.clear();
 		for (String id : References.data.keySet()) {
@@ -83,10 +77,7 @@ public class Fireworks extends EmptySketch {
 		
 		// funzione che riordina gli iphones in modo univoco in base all'id (da copiare)
 		read();
-		/////
-//	    color col = color(181,157,0,100);
-	    float lineLength = 0;
-	    float angle = 0;
+		float angle = 0;
 	    int angleSpeed = 1;
 		
 		// for loop che permette di selezionare i vari IPhones uno per uno e generare le grafiche ad esso connesse (da copiare)
@@ -99,25 +90,22 @@ public class Fireworks extends EmptySketch {
 		    float y = theRec.acc.y*accAmpl; //accedete ai dati di accelerazione all'interno della classe Rcvr con la formula theRec.acc.x o .y o .z
 		    int z = (int) theRec.acc.z*accAmpl; //accedete ai dati di accelerazione all'interno della classe Rcvr con la formula theRec.acc.x o .y o .z
 
-		    int currR = (int) parent.map(x, -3, 3, 100, 255);
-		    int currG = (int) parent.map(y, -3, 3, 100, 255);
-		    int currB = (int) parent.map(z, -3, 3, 100, 255);
+		    int currR = (int) PApplet.map(x, -3, 3, 100, 255);
+		    int currG = (int) PApplet.map(y, -3, 3, 100, 255);
+		    int currB = (int) PApplet.map(z, -3, 3, 100, 255);
 		    
 //		    parent.point(x*100, y*100);
 
 		    ///// inserite qui il vostro codice per la grafica che verrà generata da ciascun Iphone
 		    /////
 		    
-		    // esempio
-		    lineLength = parent.random(70, 200);
-
 		    parent.pushMatrix();
 		    parent.strokeWeight(lWidth); 
 		    parent.noFill();
 		    parent.stroke(currR,currG,currB);
 //		    parent.translate(parent.mouseX,parent.mouseY);
-		    parent.translate(parent.cos((float)x)*xAmpl+parent.width/2,
-		    				 parent.sin((float)y)*yAmpl+parent.height/2);
+		    parent.translate(PApplet.cos((float)x)*xAmpl+parent.width/2,
+		    				 PApplet.sin((float)y)*yAmpl+parent.height/2);
 		    for(int j = 0;j < 100; j++){
 		    parent.rotate(angle);
 		    parent.line(0, 0, x+y+z, 0);

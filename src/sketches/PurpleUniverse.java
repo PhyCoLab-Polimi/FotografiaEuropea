@@ -3,6 +3,7 @@ package sketches;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 
 import toxi.geom.Vec3D;
 
@@ -14,8 +15,6 @@ public class PurpleUniverse extends EmptySketch {
 	private class Rcvr {
 		String UDID;
 		Vec3D acc= new Vec3D(0,0,0);
-		float countx=0;
-		float county=0;
 		
 		int pointID;
 		
@@ -48,7 +47,7 @@ public class PurpleUniverse extends EmptySketch {
 		
 		for(int i = 0; i < 500; i++){			
 			float radius = parent.random(200, 350);			
-			float angle = parent.random(parent.PI *2);			
+			float angle = parent.random(PConstants.PI *2);			
 			Pt p = new Pt(radius, angle);			
 			points.add(p);		
 		}
@@ -85,18 +84,18 @@ public class PurpleUniverse extends EmptySketch {
 				float accScale;
 				
 				if(massAdd > 0){
-					accScale = parent.map(massAdd, 0, 6, minAccScale, maxAccScale);			
+					accScale = PApplet.map(massAdd, 0, 6, minAccScale, maxAccScale);			
 				}
 				else{
-					accScale = parent.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
+					accScale = PApplet.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
 				}
 				
 				Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
 									
 				
-				int numConnections = parent.floor(parent.map(massAdd, -2, 2, 3, (float) (recCollection.size()/1.2)));
+				int numConnections = PApplet.floor(PApplet.map(massAdd, -2, 2, 3, (float) (recCollection.size()/1.2)));
 				
-				numConnections = parent.constrain(numConnections, 3, parent.floor((float) (recCollection.size()/1.2)));
+				numConnections = PApplet.constrain(numConnections, 3, PApplet.floor((float) (recCollection.size()/1.2)));
 				
 				for (int j=0; j<recCollection.size(); j++) {
 					if(i != j){
@@ -107,10 +106,10 @@ public class PurpleUniverse extends EmptySketch {
 						float accScale2;
 							
 						if(massAdd2> 0){
-							accScale2 = parent.map(massAdd2, 0, 6, minAccScale, maxAccScale);			
+							accScale2 = PApplet.map(massAdd2, 0, 6, minAccScale, maxAccScale);			
 						}
 						else{
-							accScale2 = parent.map(massAdd2, -6, 0, -maxAccScale, -minAccScale);
+							accScale2 = PApplet.map(massAdd2, -6, 0, -maxAccScale, -minAccScale);
 						}
 							
 						Pt p2 = points.get(theRec2.pointID);
@@ -144,17 +143,17 @@ public class PurpleUniverse extends EmptySketch {
 			float accScale;
 			
 			if(massAdd > 0){
-				accScale = parent.map(massAdd, 0, 6, minAccScale, maxAccScale);			
+				accScale = PApplet.map(massAdd, 0, 6, minAccScale, maxAccScale);			
 			}
 			else{
-				accScale = parent.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
+				accScale = PApplet.map(massAdd, -6, 0, -maxAccScale, -minAccScale);
 			}
 			
 			Vec3D innerPt = new Vec3D(p.loc.x/(innerScale*accScale), p.loc.y/(innerScale*accScale), p.loc.z/(innerScale*accScale));
 			
 			parent.noStroke();
-			float stSize = parent.map(Math.abs(massAdd), 0, 6, 20, 60);
-			stSize = parent.constrain(stSize, 0, 100);
+			float stSize = PApplet.map(Math.abs(massAdd), 0, 6, 20, 60);
+			stSize = PApplet.constrain(stSize, 0, 100);
 			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), (float) (stSize*5));
 			
 			parent.ellipse(innerPt.x + p.center.x, innerPt.y + p.center.y, stSize, stSize);
@@ -194,8 +193,6 @@ public class PurpleUniverse extends EmptySketch {
 			float py = (float) (Math.cos(angle)* radius);
 			
 			loc = new Vec3D(px, py, 0);
-			
-			float r = (float) parent.random(1);
 			
 			theta = parent.random(-0.06f, 0.02f);
 			
@@ -290,7 +287,7 @@ private void read () {
 			
 			
 			if(recCollection.size()==0){
-				Rcvr nuRec= new Rcvr(ds.id,new Vec3D(ds.x,ds.y,ds.z), parent.floor(parent.random(points.size())));
+				Rcvr nuRec= new Rcvr(ds.id,new Vec3D(ds.x,ds.y,ds.z), PApplet.floor(parent.random(points.size())));
 				recCollection.add(nuRec);
 			}
 			else{
@@ -305,7 +302,7 @@ private void read () {
 			          }
 				}
 		        if (addNew==true) {
-		            Rcvr nuRec= new Rcvr(ds.id, new Vec3D(ds.x,ds.y,ds.z), parent.floor(parent.random(points.size())));    
+		            Rcvr nuRec= new Rcvr(ds.id, new Vec3D(ds.x,ds.y,ds.z), PApplet.floor(parent.random(points.size())));    
 		            recCollection.add(nuRec);
 		          }
 			}

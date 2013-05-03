@@ -33,16 +33,17 @@ public class Program extends PApplet {
 		//INSERT SETUP AFTER THIS LINE
 		// ------------------------------------------------
 		
-		sketches = new EmptySketch[9];
-		sketches[0] = new Names(); sketches[0].setup();
-		sketches[1] = new TomasoBaj(); sketches[1].setup();
-		sketches[2] = new GreenLines(); sketches[2].setup();
+		sketches = new EmptySketch[10];
+		sketches[0] = new Butterfly(); sketches[0].setup();
+		sketches[1] = new BWHistogram(); sketches[1].setup();
+		sketches[2] = new Circles(); sketches[2].setup();
 		sketches[3] = new Fireworks(); sketches[3].setup();
-		sketches[4] = new YellowShapes(); sketches[4].setup();
-		sketches[5] = new Butterfly(); sketches[5].setup();
-		sketches[6] = new PurpleUniverse(); sketches[6].setup();
-		sketches[7] = new TomasoBaj(); sketches[7].setup();
-		sketches[8] = new Circles(); sketches[8].setup();
+		sketches[4] = new GreenLines(); sketches[4].setup();
+		sketches[5] = new Lines(); sketches[5].setup();
+		sketches[6] = new Names(); sketches[6].setup();
+		sketches[7] = new PurpleUniverse(); sketches[7].setup();
+		sketches[8] = new TreeMap(); sketches[8].setup();
+		sketches[9] = new YellowShapes(); sketches[8].setup();
 	}
 	
 	public void draw() {
@@ -103,6 +104,7 @@ public class Program extends PApplet {
 		int i = Character.getNumericValue(key);
 		if (i>=0 && i< sketches.length) {
 			this.rectMode(PApplet.CORNER);
+			this.noStroke();
 			this.fill(0,0,0,255);
 			this.rect(0, 0, References.width, References.height);
 			sketches[i].setup();

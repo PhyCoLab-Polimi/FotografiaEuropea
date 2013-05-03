@@ -6,8 +6,8 @@ import processing.core.PApplet;
 
 public class TreeMap extends EmptySketch {
 
-	private int numberOfRows = 20;
-	private int numberOfColumns = 5;
+	private int numberOfRows;
+	private int numberOfColumns;
 	
 	private float xStep;
 	private float yStep;
@@ -27,6 +27,10 @@ public class TreeMap extends EmptySketch {
 		parent.colorMode(PApplet.RGB,255,255,255,255);
 		parent.stroke(255,255,255,200);
 		parent.strokeWeight(3);
+		
+		for (DataStruct ds: References.data.values()) {
+			System.out.println(ds.id);
+		}
 	}
 	
 	public void draw(){
@@ -49,6 +53,12 @@ public class TreeMap extends EmptySketch {
 			
 			total+=d;
 		}
+		
+		int totalCells = 3 * References.data.size();
+		numberOfColumns = (int) Math.ceil(Math.sqrt(totalCells));
+		numberOfRows = numberOfColumns;
+		//System.out.println(totalCells+" "+numberOfColumns+" "+numberOfRows);
+		
 		
 		xStep = (float)References.width / numberOfColumns;
 		yStep = (float)References.height / numberOfRows;
