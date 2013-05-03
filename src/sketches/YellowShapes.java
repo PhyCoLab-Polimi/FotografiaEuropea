@@ -1,6 +1,5 @@
-
 package sketches;
- 
+
 
 import processing.core.PApplet;
 
@@ -8,21 +7,21 @@ import main.DataStruct;
 
 import main.References;
 
- 
+
 
 public class YellowShapes extends EmptySketch {
 
- 
+
 
 protected PApplet parent = References.parent;
 
- 
 
- 
+
+
 
 Ball[] myBall;
 
- 
+
 
 int counter;
 
@@ -32,25 +31,25 @@ int distance = 100;
 
 int distance_line=200;
 
- 
+
 
     int radius_light = 12;
 
 int radius = 8;
 
- 
+
 
 int speed = 1;
 
- 
 
-//mappatura movimento/velocità
+
+//mappatura movimento/velocit‡
 
 float maxAmp = (float)2.3;
 
 float minAmp = (float)-2.3;
 
- 
+
 
 float maxSpeed = 10;
 
@@ -58,23 +57,23 @@ float minSpeed = 1;
 
 float calcSpeed;
 
- 
+
 
 public void setup() {
 
- 
+
 
       parent.colorMode(PApplet.RGB, 255, 255, 255, 255);
 
   parent.ellipseMode(PApplet.CENTER);
 
- 
+
 
   parent.background(0,0,0);
 
   parent.smooth();
 
- 
+
 
   //class setup
 
@@ -88,29 +87,29 @@ public void setup() {
 
   }
 
- 
+
 
 }
 
- 
+
 
 public void draw() {
 
- 
+
 
   parent.background(0,0,0);
 
- 
 
- 
+
+
 
   int numCell=0;
 
- 
+
 
   for (String id: References.data.keySet()) {
 
- 
+
 
 DataStruct ds = References.data.get(id);
 
@@ -119,34 +118,34 @@ float acc = PApplet.map(PApplet.abs(ds.x), 0, PApplet.max(PApplet.abs(ds.minX), 
 float acc2 = PApplet.map(PApplet.abs(ds.y), 0, PApplet.max(PApplet.abs(ds.minY), ds.maxY), minSpeed, maxSpeed);
 float acc3 = PApplet.map(PApplet.abs(ds.z), 0, PApplet.max(PApplet.abs(ds.minZ), ds.maxZ), minSpeed, maxSpeed);
 
- 
+
 
 calcSpeed = acc+acc2+acc3+calcSpeed;
 
- 
+
 
 numCell++;
 
- 
+
 
 }
 
- 
+
 
 calcSpeed= calcSpeed/numCell/3;
 
 
- 
 
- 
+
+
 
 speed = (int) calcSpeed;
 
 calcSpeed = 0;
 
- 
 
- 
+
+
 
   for (int i = 0; i < ballAmount; i++) {
 
@@ -154,27 +153,27 @@ calcSpeed = 0;
 
   myBall[i].drawBall();
 
- 
 
-   
 
- 
+
+
+
 
     for (int j = 0; j < i; j++) {
 
-     
+
 
       if (i != j) {
 
-       
+
 
         float distBalls = PApplet.dist(myBall[i].x, myBall[i].y, myBall[j].x, myBall[j].y);
 
-       
+
 
         if (distBalls <= 20) parent.ellipse(myBall[i].x, myBall[i].y, parent.random(40,50),parent.random(40,50));
 
-       
+
 
         if(distBalls<distance_line) {
 
@@ -184,7 +183,7 @@ calcSpeed = 0;
 
          parent.stroke(200,200,200,alpy);
 
- 
+
 
          parent.line(myBall[i].x, myBall[i].y, myBall[j].x, myBall[j].y);
 
@@ -198,13 +197,13 @@ calcSpeed = 0;
 
         }
 
-       
+
 
         for (int k = 0; k < ballAmount; k++) {
 
-  
 
-          
+
+
 
         if (k!= j && k!=i) {
 
@@ -212,19 +211,19 @@ calcSpeed = 0;
 
         float distBalls3 = PApplet.dist(myBall[k].x, myBall[k].y, myBall[j].x, myBall[j].y);
 
-      
 
-       
 
-            
 
-          if (distBalls <= distance && distBalls2<= distance && distBalls3<= distance) {  
 
-         
 
-          
 
-     
+          if (distBalls <= distance && distBalls2<= distance && distBalls3<= distance) {
+
+
+
+
+
+
 
            parent.fill(myBall[i].myColor,myBall[j].myColor,0, 100);
 
@@ -232,25 +231,25 @@ calcSpeed = 0;
 
            parent.triangle(myBall[k].x, myBall[k].y, myBall[i].x, myBall[i].y,  myBall[j].x, myBall[j].y);
 
-         
 
- 
 
-           }
 
-          
-
- 
-
-          
 
            }
 
-        
 
-    
 
- 
+
+
+
+
+           }
+
+
+
+
+
+
 
         if (distBalls <= radius) {
 
@@ -266,29 +265,29 @@ calcSpeed = 0;
 
     }
 
-   
 
- 
 
-  
+
+
+
 
   }
 
- 
+
 
 }
 
- 
 
- 
 
- 
 
- 
 
- 
 
- 
+
+
+
+
+
+
 
 //THE CLASS
 
@@ -308,7 +307,7 @@ class Ball {
 
   int lighton;
 
- 
+
 
   void setup() {
 
@@ -316,7 +315,7 @@ class Ball {
 
     y = parent.random(References.height);
 
-    myColor=parent.random(100,200);
+    myColor=parent.random(40,200);
 
     setInc(1);
 
@@ -326,7 +325,7 @@ class Ball {
 
   }
 
- 
+
 
   //speed
 
@@ -338,19 +337,19 @@ class Ball {
 
   }
 
- 
 
- 
+
+
 
   //the ball
 
   void drawBall() {
 
-  
+
 
    parent.noStroke();
 
-  
+
 
    parent.fill(60,60,60,100);
 
@@ -372,29 +371,29 @@ class Ball {
 
   }
 
- 
+
 
   //direction
 
   void step() {
 
-   
+
 
     //controllo incremento still in canvas
 
-    if (x > References.width-10 || x < 10) {
+    if (x > References.width-20 || x < 20) {
 
       incX = -incX;
 
     }
 
-    if (y > References.height-10 || y < 10) {
+    if (y > References.height-20 || y < 20) {
 
       incY = -incY;
 
     }
 
-   
+
 
     //PASSO!
 
@@ -402,37 +401,37 @@ class Ball {
 
     y = y + incY;
 
- 
+
 
 //controllo variabili still in canvas
 
-    if (x >  References.width-10) {
+    if (x >  References.width-20) {
 
-      x =  References.width-15;
-
-      setInc(1);
-
-    }
-
-    if (x < 10) {
-
-      x = 15;
+      x =  References.width-25;
 
       setInc(1);
 
     }
 
-    if (y > References.height-10) {
+    if (x < 20) {
 
-      y = References.height-15;
+      x = 25;
 
       setInc(1);
 
     }
 
-    if (y < 10) {
+    if (y > References.height-20) {
 
-      y = 15;
+      y = References.height-25;
+
+      setInc(1);
+
+    }
+
+    if (y < 20) {
+
+      y = 25;
 
       setInc(1);
 
@@ -442,10 +441,6 @@ class Ball {
 
 }
 
- 
 
- 
-
- 
 
 }

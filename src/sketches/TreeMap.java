@@ -54,7 +54,7 @@ public class TreeMap extends EmptySketch {
 			total+=d;
 		}
 		
-		int totalCells = 3 * References.data.size();
+		int totalCells = Math.min(3 * References.data.size(), 500);
 		numberOfColumns = (int) Math.ceil(Math.sqrt(totalCells));
 		numberOfRows = numberOfColumns;
 		//System.out.println(totalCells+" "+numberOfColumns+" "+numberOfRows);

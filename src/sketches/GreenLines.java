@@ -63,9 +63,11 @@ public class GreenLines extends EmptySketch{
 		
 		float totAcc = 0;
 		
-		float xDist = parent.width/(recCollection.size() + 1);
+		int limit =  Math.min(recCollection.size()+1, 100);
 		
-		for(int i = 0; i < recCollection.size(); i++){
+		float xDist = (float)parent.width/limit;
+		
+		for(int i = 0; i < limit; i++){
 			Rcvr theRec= (Rcvr) recCollection.get(i);
 			
 			// creating balls moving up and down, changing color and scaling according to acc values

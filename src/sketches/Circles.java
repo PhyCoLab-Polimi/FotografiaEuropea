@@ -31,6 +31,7 @@ public class Circles extends EmptySketch {
 		parent.stroke(0,0,50,20);
 		parent.ellipseMode(PApplet.CENTER);
 		
+		int limitCount = 0;
 		for (String id: References.data.keySet()) {
 			DataStruct ds = References.data.get(id);
 			Point p;
@@ -48,10 +49,13 @@ public class Circles extends EmptySketch {
 			int X = (int) PApplet.map(ds.x, ds.minX, ds.maxX, 0, 50);//References.width);
 			int Y = (int) PApplet.map(ds.y, ds.minY, ds.maxY, 0, 50);//References.height);
 			baseSize = X + Y;
+			if (limitCount<100)
 			parent.ellipse(	PApplet.constrain(p.x+X+addx, 0, References.width), 
 							PApplet.constrain(p.y+Y+addy, 0, References.height),
 							baseSize+randomSize, 
 							baseSize+randomSize);
+			
+			limitCount++;
 		}
 
 		addx = addx + (int) parent.random(-2,2);

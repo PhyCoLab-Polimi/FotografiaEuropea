@@ -28,7 +28,7 @@ public class Names extends EmptySketch{
 	PFont font;
 	
 	float fontSizeMin = 5;
-	float fontSizeMax = 40;
+	float fontSizeMax = 30;
 	int maxNames = 10;
 	
 	int frameCount = 1;

@@ -8,8 +8,7 @@ import main.DataStruct;
 import main.References;
 
 public class Lines extends EmptySketch {
-
-	private int steps = 30;
+	
 	private int maxStep = 100;
 	
 	private int [] colors = {

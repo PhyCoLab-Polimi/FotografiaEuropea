@@ -27,6 +27,7 @@ public class Butterfly extends EmptySketch {
 	float theta= 0;
 	float omega= (float) 3.1416 ;
 	
+	int limit;
 	
 	public void setup () {
 		
@@ -34,6 +35,8 @@ public class Butterfly extends EmptySketch {
 	
 	public void draw() {
 		
+
+		limit =  Math.min(recCollection.size(), 30);
 		parent.background(0);
 		parent.smooth();
 		dataAL.clear();
@@ -90,7 +93,7 @@ public class Butterfly extends EmptySketch {
 		
 		  float Rad= 3;
 
-		  for (int i=0; i<recCollection.size(); i++) {
+		  for (int i=0; i<limit; i++) {
 		    Rcvr theRec= (Rcvr) recCollection.get(i);
 
 
@@ -103,19 +106,19 @@ public class Butterfly extends EmptySketch {
 		    parent.noFill();
 		    parent.stroke(Math.abs(theRec.acc.z)*PApplet.sin(i/10)*100,parent.random(50,150));
 		    parent.strokeWeight((float)0.5*Math.abs(theRec.acc.y));
-		    parent.ellipse(cenX, cenY, References.height/5/recCollection.size()*i*Rad, References.height/5/recCollection.size()*i*Rad);
-		    parent.ellipse(cenX, cenY, References.height/10/recCollection.size()*i*Rad, References.height/10/recCollection.size()*i*Rad);
+		    parent.ellipse(cenX, cenY, References.height/5/limit*i*Rad, References.height/5/limit*i*Rad);
+		    parent.ellipse(cenX, cenY, References.height/10/limit*i*Rad, References.height/10/limit*i*Rad);
 		  }
 
 
-		  for (int i=0; i<recCollection.size(); i++) {
+		  for (int i=0; i<limit; i++) {
 		    Rcvr theRec= (Rcvr) recCollection.get(i);
 
-		    float rotX= PApplet.cos(PApplet.radians(theRec.county))*(References.height/5/recCollection.size()*i*Rad);
-		    float rotY= PApplet.sin(PApplet.radians(theRec.county))*(References.height/5/recCollection.size()*i*Rad);
+		    float rotX= PApplet.cos(PApplet.radians(theRec.county))*(References.height/5/limit*i*Rad);
+		    float rotY= PApplet.sin(PApplet.radians(theRec.county))*(References.height/5/limit*i*Rad);
 		    
-		    float rotaX= PApplet.cos(PApplet.radians(theRec.county))*(References.height/10/recCollection.size()*i*Rad);
-		    float rotaY= PApplet.sin(PApplet.radians(theRec.county))*(References.height/10/recCollection.size()*i*Rad);
+		    float rotaX= PApplet.cos(PApplet.radians(theRec.county))*(References.height/10/limit*i*Rad);
+		    float rotaY= PApplet.sin(PApplet.radians(theRec.county))*(References.height/10/limit*i*Rad);
 		    
 		    float cenX= References.width/2;
 		    float cenY= References.height/2+ PApplet.sin(PApplet.radians(theRec.countx))*50;
@@ -129,18 +132,18 @@ public class Butterfly extends EmptySketch {
 
 
 
-		    for (int j=0; j<recCollection.size(); j++) {
+		    for (int j=0; j<limit; j++) {
 		      Rcvr othRec= (Rcvr) recCollection.get(j);
 
-		      float rotOX= PApplet.cos(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2);
-		      float rotOY= PApplet.sin(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2);
-		      float rotRX= (float)(PApplet.cos(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2.05));
-		      float rotRY= (float)(PApplet.sin(PApplet.radians(othRec.county))*(References.height/5/recCollection.size()*j*2.05));
+		      float rotOX= PApplet.cos(PApplet.radians(othRec.county))*(References.height/5/limit*j*2);
+		      float rotOY= PApplet.sin(PApplet.radians(othRec.county))*(References.height/5/limit*j*2);
+		      float rotRX= (float)(PApplet.cos(PApplet.radians(othRec.county))*(References.height/5/limit*j*2.05));
+		      float rotRY= (float)(PApplet.sin(PApplet.radians(othRec.county))*(References.height/5/limit*j*2.05));
 
-		      float rotaOX= PApplet.cos(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2);
-		      float rotaOY= PApplet.sin(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2);
-		      float rotaRX= (float)(PApplet.cos(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2.05));
-		      float rotaRY= (float)(PApplet.sin(PApplet.radians(othRec.county))*(References.height/10/recCollection.size()*j*2.05));
+		      float rotaOX= PApplet.cos(PApplet.radians(othRec.county))*(References.height/10/limit*j*2);
+		      float rotaOY= PApplet.sin(PApplet.radians(othRec.county))*(References.height/10/limit*j*2);
+		      float rotaRX= (float)(PApplet.cos(PApplet.radians(othRec.county))*(References.height/10/limit*j*2.05));
+		      float rotaRY= (float)(PApplet.sin(PApplet.radians(othRec.county))*(References.height/10/limit*j*2.05));
 
 		      
 		      

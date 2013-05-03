@@ -46,7 +46,7 @@ public class ServerThread extends Thread {
     	if (References.data.containsKey(fields[0])) {
     		References.data.get(fields[0]).updateHistory(Float.parseFloat(fields[1]), Float.parseFloat(fields[2]), Float.parseFloat(fields[3]));    		
     	}
-    	else {
+    	else if (References.data.size() < 300) {
     		DataStruct newDS = new DataStruct(Float.parseFloat(fields[1]), Float.parseFloat(fields[2]), Float.parseFloat(fields[3]), fields[0]);
         	References.data.put(fields[0], newDS);	
     	}
