@@ -34,8 +34,8 @@ public class Program extends PApplet {
 		// ------------------------------------------------
 		
 		sketches = new EmptySketch[10];
-		sketches[0] = new Butterfly(); sketches[0].setup();
-		sketches[1] = new BWHistogram(); sketches[1].setup();
+		sketches[0] = new Matteo1(); sketches[0].setup();
+		sketches[1] = new Matteo2(); sketches[1].setup();
 		sketches[2] = new Circles(); sketches[2].setup();
 		sketches[3] = new Fireworks(); sketches[3].setup();
 		sketches[4] = new GreenLines(); sketches[4].setup();
