@@ -20,6 +20,8 @@ public class Program extends PApplet {
 	
 	EmptySketch[] sketches;
 	
+	EmptySketch[] sketches2;
+	
 	public void setup() {
 		//Initialize the reference to the PApplet
 		References.parent = this;
@@ -34,7 +36,7 @@ public class Program extends PApplet {
 		//INSERT SETUP AFTER THIS LINE
 		// ------------------------------------------------
 		
-		sketches = new EmptySketch[10];
+		sketches = new EmptySketch[12];
 		sketches[0] = new Butterfly(); sketches[0].setup();
 		sketches[1] = new BWHistogram(); sketches[1].setup();
 		sketches[2] = new Circles(); sketches[2].setup();
@@ -45,6 +47,8 @@ public class Program extends PApplet {
 		sketches[7] = new PurpleUniverse(); sketches[7].setup();
 		sketches[8] = new TreeMap(); sketches[8].setup();
 		sketches[9] = new YellowShapes(); sketches[8].setup();
+		sketches[10] = new Matteo1(); sketches[10].setup();
+		sketches[11] = new Matteo2(); sketches[11].setup();
 	}
 	
 	public void draw() {
@@ -103,8 +107,8 @@ public class Program extends PApplet {
 	}
 	
 	public void keyPressed() {
-		int i = Character.getNumericValue(key);
-		if (i>=0 && i< sketches.length) {
+		if (key>='0' && key<= '9') {
+			int i = Character.getNumericValue(key);
 			this.rectMode(PApplet.CORNER);
 			this.noStroke();
 			this.fill(0,0,0,255);
@@ -112,18 +116,62 @@ public class Program extends PApplet {
 			sketches[i].setup();
 			References.currentSketch = i;
 		}
-		else if (key==' ') {
-			/*ArrayList<String> dss = new ArrayList<String>();
+		else if (key=='i') {
+			this.rectMode(PApplet.CORNER);
+			this.noStroke();
+			this.fill(0,0,0,255);
+			this.rect(0, 0, References.width, References.height);
+			sketches[10].setup();
+			References.currentSketch = 10;
+		}
+		else if (key=='o') {
+			this.rectMode(PApplet.CORNER);
+			this.noStroke();
+			this.fill(0,0,0,255);
+			this.rect(0, 0, References.width, References.height);
+			sketches[11].setup();
+			References.currentSketch = 11;
+		}
+		else if (key==PApplet.BACKSPACE) {
+			ArrayList<String> dss = new ArrayList<String>();			
+			for (DataStruct ds: References.data.values()) {
+				//if ((now.getTime() - ds.timestamp.getTime())/1000 > 5*60) {
+					dss.add(ds.id);
+				//}
+			}
+			for (String id: dss) {
+				References.data.remove(id);
+			}
+		}
+		else if (key==PApplet.DELETE) {
+			ArrayList<String> dss = new ArrayList<String>();
 			Date now = new Date();
 			
 			for (DataStruct ds: References.data.values()) {
-				if ((now.getTime() - ds.timestamp.getTime())/1000 > 5*60) {
+				if((now.getTime() - ds.timestamp.getTime())/1000 > 5*60) {
 					dss.add(ds.id);
 				}
 			}
 			for (String id: dss) {
 				References.data.remove(id);
-			}*/
+			}
+			sketches[References.currentSketch].setup();
+		}
+		else if (key==PApplet.ENTER) {
+			try {
+				if (References.senderThread!=null && References.senderThread.isSending()) {
+					References.stopSending();
+					Thread.sleep(500); 
+				}
+			}
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error with sender restart");
+				e.printStackTrace();
+			}
+			sketches[References.currentSketch].setup();
+		}
+		else if (key==' ') {
 			try {
 				if (References.senderThread!=null && References.senderThread.isSending()) {
 					References.stopSending();
@@ -136,8 +184,7 @@ public class Program extends PApplet {
 				System.out.println("Error with sender restart");
 				e.printStackTrace();
 			}
-			
-			
+			sketches[References.currentSketch].setup();
 		}
 		else
 			Fireworks.getKey(key);
