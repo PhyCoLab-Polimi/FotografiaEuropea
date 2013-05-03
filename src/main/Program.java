@@ -12,8 +12,8 @@ public class Program extends PApplet {
 	
 	static public void main(String args[]) {
 		System.out.println("pre-main");
-		PApplet.main(new String[] {"main.Program" });
-		//PApplet.main(new String[] {"--present", "main.Program" });
+		//PApplet.main(new String[] {"main.Program" });
+		PApplet.main(new String[] {"--present", "main.Program" });
 		System.out.println("post-main");
 	}
 	
@@ -34,13 +34,13 @@ public class Program extends PApplet {
 		// ------------------------------------------------
 		
 		sketches = new EmptySketch[9];
-		sketches[0] = new YellowShapes(); sketches[0].setup();
+		sketches[0] = new Names(); sketches[0].setup();
 		sketches[1] = new TomasoBaj(); sketches[1].setup();
 		sketches[2] = new GreenLines(); sketches[2].setup();
 		sketches[3] = new Fireworks(); sketches[3].setup();
-		sketches[4] = new BWHistogram(); sketches[4].setup();
+		sketches[4] = new YellowShapes(); sketches[4].setup();
 		sketches[5] = new Butterfly(); sketches[5].setup();
-		sketches[6] = new PaoloAlborghetti(); sketches[6].setup();
+		sketches[6] = new PurpleUniverse(); sketches[6].setup();
 		sketches[7] = new TomasoBaj(); sketches[7].setup();
 		sketches[8] = new Circles(); sketches[8].setup();
 	}

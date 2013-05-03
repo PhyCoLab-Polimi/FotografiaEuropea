@@ -20,13 +20,14 @@ public class BWHistogram extends EmptySketch {
 	
 	private float firstStep = (float) (References.height * 0.15);
 	
-	private float maxHeight = (References.height-firstStep)/numberOfLines;
+	private float maxHeight;
 	
 	private int alphaSat = 100;
 	
 	
 	
 	public void setup () {
+		
 		//parent.colorMode(PApplet.HSB);
 		parent.colorMode(PApplet.RGB,255,255,255,255);
 		parent.stroke(255,255,255,200);
@@ -40,7 +41,9 @@ public class BWHistogram extends EmptySketch {
 		parent.fill(0);
 		parent.rect(0,0,References.width, References.height);
 		
-
+		numberOfLines = (int) Math.min(7, References.data.size());
+		maxHeight = (References.height-firstStep)/numberOfLines;
+		
 		Object[] data = References.data.values().toArray();
 		
 		for (int i=0; i<numberOfLines;i++) {

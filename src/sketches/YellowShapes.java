@@ -38,7 +38,7 @@ Ball[] myBall;
 
 int counter;
 
-int ballAmount = 70;
+int ballAmount = 50;
 
 int distance = 100;
 
@@ -394,13 +394,13 @@ class Ball {
 
     //controllo incremento still in canvas
 
-    if (x > References.width-50 || x < 50) {
+    if (x > References.width-10 || x < 10) {
 
       incX = -incX;
 
     }
 
-    if (y > References.height-50 || y < 50) {
+    if (y > References.height-10 || y < 10) {
 
       incY = -incY;
 
@@ -418,33 +418,33 @@ class Ball {
 
 //controllo variabili still in canvas
 
-    if (x >  References.width-50) {
+    if (x >  References.width-10) {
 
-      x =  References.width-55;
-
-      setInc(1);
-
-    }
-
-    if (x < 50) {
-
-      x = 55;
+      x =  References.width-15;
 
       setInc(1);
 
     }
 
-    if (y > References.height-50) {
+    if (x < 10) {
 
-      y = References.height-55;
+      x = 15;
 
       setInc(1);
 
     }
 
-    if (y < 50) {
+    if (y > References.height-10) {
 
-      y = 55;
+      y = References.height-15;
+
+      setInc(1);
+
+    }
+
+    if (y < 10) {
+
+      y = 15;
 
       setInc(1);
 

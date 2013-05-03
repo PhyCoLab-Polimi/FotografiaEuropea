@@ -98,7 +98,7 @@ public class PurpleUniverse extends EmptySketch {
 				
 				numConnections = parent.constrain(numConnections, 3, parent.floor((float) (recCollection.size()/1.2)));
 				
-				for (int j=0; j<numConnections; j++) {
+				for (int j=0; j<recCollection.size(); j++) {
 					if(i != j){
 						Rcvr theRec2= (Rcvr) recCollection.get(j);
 							
