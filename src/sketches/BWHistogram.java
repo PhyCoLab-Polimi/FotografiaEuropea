@@ -43,6 +43,7 @@ public class BWHistogram extends EmptySketch {
 		
 		numberOfLines = (int) Math.min(7, References.data.size());
 		maxHeight = (References.height-firstStep)/numberOfLines;
+		if (numberOfLines==0) numberOfLines++;
 		int numberOfPoints = (data.length / numberOfLines);
 		
 		for (int i=0; i<numberOfLines;i++) {

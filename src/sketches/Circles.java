@@ -28,7 +28,6 @@ public class Circles extends EmptySketch {
 		parent.rectMode(PApplet.CORNER);
 		parent.rect(0,0,References.width, References.height);
 		parent.colorMode(PApplet.HSB, 360, 100, 100, 100);
-		parent.stroke(0,0,50,20);
 		parent.ellipseMode(PApplet.CENTER);
 		
 		int limitCount = 0;

@@ -29,7 +29,7 @@ public class Program extends PApplet {
 		
 		//Start the server listener
 		References.initServer();	
-		References.initSender();
+		//References.initSender();
 		
 		//INSERT SETUP AFTER THIS LINE
 		// ------------------------------------------------
@@ -48,6 +48,7 @@ public class Program extends PApplet {
 	}
 	
 	public void draw() {
+		System.out.println(References.data.size()+" devices connected");
 		//Example of iterating over the data.
 		
 		//Get the number of data present:
@@ -112,7 +113,7 @@ public class Program extends PApplet {
 			References.currentSketch = i;
 		}
 		else if (key==' ') {
-			ArrayList<String> dss = new ArrayList<String>();
+			/*ArrayList<String> dss = new ArrayList<String>();
 			Date now = new Date();
 			
 			for (DataStruct ds: References.data.values()) {
@@ -122,7 +123,21 @@ public class Program extends PApplet {
 			}
 			for (String id: dss) {
 				References.data.remove(id);
+			}*/
+			try {
+				if (References.senderThread!=null && References.senderThread.isSending()) {
+					References.stopSending();
+					Thread.sleep(500); 
+				}
+				References.initSender();
 			}
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error with sender restart");
+				e.printStackTrace();
+			}
+			
+			
 		}
 		else
 			Fireworks.getKey(key);

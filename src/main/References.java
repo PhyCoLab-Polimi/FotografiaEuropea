@@ -36,4 +36,11 @@ public class References {
 		References.senderThread =  new DataSenderFromFileThread();
 		senderThread.start();
 	}
+	
+	public static void stopSending() {
+		if (senderThread!= null) {
+			senderThread.stopSending();
+		}
+	}
+	
 }

@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -12,6 +13,10 @@ public class DataSenderFromFileThread extends Thread{
 	
 	BufferedReader[] files;
     DatagramSocket socket;
+    private boolean sending = true;
+    
+    public void stopSending() {this.sending = false;}
+    public boolean isSending() {return this.sending;}
     
     public DataSenderFromFileThread() {
     	//Init the port
@@ -41,7 +46,7 @@ public class DataSenderFromFileThread extends Thread{
     		try {
     			//Read next line and send the data string:
     			int id = 0;
-    			for (int j=0; j<19;j++) {
+    			for (int j=0; j<files.length;j++) {
     				
     				String s = files[j].readLine();
     				
@@ -69,7 +74,21 @@ public class DataSenderFromFileThread extends Thread{
 				e.printStackTrace();
 				continue;
 			}
+    		
+    		if (!sending) break;
     	}
+    	
+    	for (int f=0;f<files.length;f++) {
+    		try {
+				files[f].close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+
+		socket.close();
     }
     
     
