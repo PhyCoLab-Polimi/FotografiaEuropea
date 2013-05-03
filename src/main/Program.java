@@ -52,7 +52,7 @@ public class Program extends PApplet {
 	}
 	
 	public void draw() {
-		System.out.println(References.data.size()+" devices connected");
+		//System.out.println(References.data.size()+" devices connected");
 		//Example of iterating over the data.
 		
 		//Get the number of data present:
@@ -107,6 +107,7 @@ public class Program extends PApplet {
 	}
 	
 	public void keyPressed() {
+		System.out.println(key);
 		if (key>='0' && key<= '9') {
 			int i = Character.getNumericValue(key);
 			this.rectMode(PApplet.CORNER);
