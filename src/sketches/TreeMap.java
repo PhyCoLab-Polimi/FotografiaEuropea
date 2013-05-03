@@ -27,10 +27,6 @@ public class TreeMap extends EmptySketch {
 		parent.colorMode(PApplet.RGB,255,255,255,255);
 		parent.stroke(255,255,255,200);
 		parent.strokeWeight(3);
-		
-		for (DataStruct ds: References.data.values()) {
-			System.out.println(ds.id);
-		}
 	}
 	
 	public void draw(){

@@ -80,7 +80,7 @@ public class GreenLines extends EmptySketch{
 			totAcc += Math.abs(massAdd);
 			
 			float yPos = PApplet.map(theRec.acc.y, -2, 2, 20, References.height - 20);
-			yPos = parent.constrain(yPos, upLimit, References.height - upLimit);
+			yPos = PApplet.constrain(yPos, upLimit, References.height - upLimit);
 			
 			//float r = parent.map(theRec.acc.x, -2, 2, 100, 255);
 			float g = PApplet.map(theRec.acc.y, -2, 2, 25, 255);
@@ -97,7 +97,7 @@ public class GreenLines extends EmptySketch{
 				Rcvr prevRec = (Rcvr) recCollection.get(i - 1);
 				
 				float prevYPos = PApplet.map(prevRec.acc.y, -2, 2, 20, References.height -20);
-				prevYPos = parent.constrain(prevYPos, upLimit, References.height - upLimit);
+				prevYPos = PApplet.constrain(prevYPos, upLimit, References.height - upLimit);
 				
 				parent.stroke(255, 100);
 				parent.strokeWeight(2);

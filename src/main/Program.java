@@ -1,6 +1,7 @@
 package main;
 
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Date;
 
 import processing.core.PApplet;
@@ -12,8 +13,8 @@ public class Program extends PApplet {
 	
 	static public void main(String args[]) {
 		System.out.println("pre-main");
-		PApplet.main(new String[] {"main.Program" });
-		//PApplet.main(new String[] {"--present", "main.Program" });
+		//PApplet.main(new String[] {"main.Program" });
+		PApplet.main(new String[] {"--present", "main.Program" });
 		System.out.println("post-main");
 	}
 	
@@ -34,8 +35,8 @@ public class Program extends PApplet {
 		// ------------------------------------------------
 		
 		sketches = new EmptySketch[10];
-		sketches[0] = new Matteo1(); sketches[0].setup();
-		sketches[1] = new Matteo2(); sketches[1].setup();
+		sketches[0] = new Butterfly(); sketches[0].setup();
+		sketches[1] = new BWHistogram(); sketches[1].setup();
 		sketches[2] = new Circles(); sketches[2].setup();
 		sketches[3] = new Fireworks(); sketches[3].setup();
 		sketches[4] = new GreenLines(); sketches[4].setup();
@@ -109,6 +110,19 @@ public class Program extends PApplet {
 			this.rect(0, 0, References.width, References.height);
 			sketches[i].setup();
 			References.currentSketch = i;
+		}
+		else if (key==' ') {
+			ArrayList<String> dss = new ArrayList<String>();
+			Date now = new Date();
+			
+			for (DataStruct ds: References.data.values()) {
+				if ((now.getTime() - ds.timestamp.getTime())/1000 > 5*60) {
+					dss.add(ds.id);
+				}
+			}
+			for (String id: dss) {
+				References.data.remove(id);
+			}
 		}
 		else
 			Fireworks.getKey(key);

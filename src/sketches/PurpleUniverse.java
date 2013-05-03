@@ -160,7 +160,7 @@ public class PurpleUniverse extends EmptySketch {
 			
 			parent.noStroke();
 			float stSize = PApplet.map(Math.abs(massAdd), 0, 6, 20, 50);
-			stSize = parent.constrain(stSize, 20, 50);
+			stSize = PApplet.constrain(stSize, 20, 50);
 			
 			parent.fill(parent.random(0, 150), 0, parent.random(100, 255), (float) (stSize*transparency));
 			
