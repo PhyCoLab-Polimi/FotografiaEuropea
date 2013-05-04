@@ -13,8 +13,8 @@ public class Program extends PApplet {
 	
 	static public void main(String args[]) {
 		System.out.println("pre-main");
-		//PApplet.main(new String[] {"main.Program" });
-		PApplet.main(new String[] {"--present", "main.Program" });
+		PApplet.main(new String[] {"main.Program" });
+		//PApplet.main(new String[] {"--present", "main.Program" });
 		System.out.println("post-main");
 	}
 	

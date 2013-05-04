@@ -1,0 +1,29 @@
+0 			Butterfly
+1 			BWHistogram
+2 			Circles
+3 			Fireworks
+4 			GreenLines
+5 			Lines
+6 			Names
+7 			PurpleUniverse
+8 			TreeMap
+9 			YellowShapes
+i 			Matteo1
+o 			Matteo2
+
+enter 		STOP SENDER
+space 		RESET SENDER
+backspace	DELETE ALL DATA (!!!)
+canc		CLEAR OLD DATA (!!!)
+
+q			WIDTH+
+w			WIDTH-
+a			LARGO+
+s			LARGO-
+z			ALTO+
+x			ALTO-
+e			ALPHA+
+r			ALPHA-
+d			SIZE+
+f			SIZE-
+p			COLLAPSE
